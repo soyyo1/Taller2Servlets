@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
-<!-- informacion de la pagina, fuentes y bootstrap -->
+<!-- Este es el encabezado el que contiene el menu -->
 <head>
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <title>Registro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="estiloI.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href=estiloR.css>
 </head>
+
 <body>
 <!-- Este es el encabezado el que contiene el menu -->
 <header>
@@ -25,7 +26,7 @@
                 <a class="nav-link" href="registro.html">Registrese</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="Colecciones.html">Colecciones</a>
+                <a class="nav-link" href="Colecciones.html">colecciones</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Acerca de</a>
@@ -33,17 +34,27 @@
         </ul>
     </nav>
 </header>
-<!-- Este es el formulario con el cual el usuario puede iniciar sesion -->
-<div class="login-page">
-    <div class="form">
-        <form class="login-form">            <input type="text" placeholder="Nombre de usuario"/>
-            <input type="password" placeholder="Contraseña"/>
-            <button>Ingrese</button>
-            <p class="message">¿No te has registrado? <a href="registro.html">Crear cuenta</a></p>
-        </form>
-    </div>
-</div>
+<!-- Este es el formulario que tiene que hacer el ususario para registrarse -->
+<form class="form">
+
+    <h1 class="titulo">Registrarse</h1>
+
+    <input class="cajas" type="text" placeholder="Nombre" required maxlength="30">
+    <input class="cajas" type="text" placeholder="Apellido" required maxlength="30">
+    <input class="cajas" type="email" placeholder="Email" required maxlength="30">
+    <input class="cajas" type="password" placeholder="Password" required maxlength="30">
+
+    <p class="termino1"><input type="checkbox"> Cuenta Usuario </p>
+    <p class="termino1"><input type="checkbox"> Cuenta Artista </p>
+
+    <input type="submit" class="btn" value="REGISTRAR">
+
+
+    <p class="tengo-cuenta"><a href="formulario1.html" class="tengo-cuenta">Ya tengo cuenta</a></p>
+
+</form>
 
 
 </body>
+
 </html>
