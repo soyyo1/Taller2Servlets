@@ -18,8 +18,8 @@ import javax.servlet.annotation.*;
         public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
             response.setContentType("text/html");
 
-            String username = request.getParameter("UserName");
-            String password = request.getParameter("Password");
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
 
             List<User> users = new UserService().getUsers();
 
@@ -35,7 +35,9 @@ import javax.servlet.annotation.*;
                 cookie.setMaxAge(20);
                 response.addCookie(cookie);
 
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("./index.html");
+                System.out.println(userFounded.getUsername());
+
+                RequestDispatcher dispatcher = request.getRequestDispatcher("./index.html");
                 dispatcher.forward(request, response);
 
             } else {
