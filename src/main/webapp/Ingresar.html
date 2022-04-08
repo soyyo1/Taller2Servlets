@@ -19,7 +19,7 @@
         </a>
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="formulario1.html">Iniciar sesion</a>
+                <a class="nav-link active" aria-current="page" href="Ingresar.html">Iniciar sesion</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="registro.html">Registrese</a>
@@ -36,10 +36,12 @@
 <!-- Este es el formulario con el cual el usuario puede iniciar sesion -->
 <div class="login-page">
     <div class="form">
-        <form class="login-form">            <input type="text" placeholder="Nombre de usuario"/>
-            <input type="password" placeholder="Contraseña"/>
+        <form action="./Ingresar"method="post">
+        <form class="login-form">            <input type="text" placeholder="UserName"/>
+            <input type="password" placeholder="Password"/>
             <button>Ingrese</button>
             <p class="message">¿No te has registrado? <a href="registro.html">Crear cuenta</a></p>
+        </form>
         </form>
     </div>
 </div>
