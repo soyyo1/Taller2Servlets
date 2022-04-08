@@ -5,7 +5,7 @@
     <title>Crear Piezas de Arte Digital</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="estiloPiezas.css">
+    <link rel="stylesheet" href=estiloPiezas.css>
 </head>
 <body>
 <header>
@@ -24,15 +24,16 @@
     </nav>
 </header>
 <div class="crear-piezas">
-    <form class="pieces-form">
+    <form action="./subir-nft" method="post" class="pieces-form">
 
         <h1 class="titulo">Crear Piezas de Arte Digital</h1>
 
-        <input class="cajas" type="title" placeholder="Título">
-        <input class="cajas" type="price" placeholder="Precio en FCoins">
+        <input class="cajas" name="titulo" type="title" placeholder="Título">
+        <input class="cajas" name="coins" type="price" placeholder="Precio en FCoins">
 
-        <p class="selec-archivo"><form name="subir-imagen" type="POST" enctype="multipart/form-data"></p>
-        <input type="file" name="imagen0000001">
+        <p class="selec-archivo">
+            <input type="file" id="url" required></input>
+        </p>
         <p class="boton"><input type="submit" name="subir-imagen" value="Enviar imagen "/></p>
     </form>
 

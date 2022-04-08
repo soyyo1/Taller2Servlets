@@ -1,10 +1,12 @@
-package co.edu.unbosque.tiendadeartevale.UserService;
+package co.edu.unbosque.tiendadeartevale;
 
 
 import java.io.*;
 import java.util.List;
 
 import co.edu.unbosque.tiendadeartevale.DTOS.User;
+import co.edu.unbosque.tiendadeartevale.UserService.UserService;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -37,7 +39,7 @@ import javax.servlet.annotation.*;
 
                 System.out.println(userFounded.getUsername());
 
-                RequestDispatcher dispatcher = request.getRequestDispatcher("./index.html");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("./colecciones_U.html");
                 dispatcher.forward(request, response);
 
             } else {
