@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="Taller2Servlets:war exploded" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="38f4fa0b-b747-4ba4-863e-c06c633b4994" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/Taller2Servlets_war.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/Taller2Servlets_war_exploded.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Taller2Servlets.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/TiendaDeArteVale_war.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/TiendaDeArteVale_war_exploded.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/webContexts.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unbosque/tiendadeartevale/DTOS/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unbosque/tiendadeartevale/DTOS/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unbosque/tiendadeartevale/UserService/LogInServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unbosque/tiendadeartevale/UserService/LogInServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unbosque/tiendadeartevale/UserService/SingUpServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unbosque/tiendadeartevale/UserService/SingUpServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unbosque/tiendadeartevale/UserService/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unbosque/tiendadeartevale/UserService/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/Colecciones.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/Colecciones.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/Ingresar.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/Ingresar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/colecciones_U.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/colecciones_U.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/crearPiezas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/crearPiezas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/recargar.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/recargar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/registro.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/registro.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/estiloC.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/estiloC.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/estiloI.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/estiloI.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/estiloPiezas.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/estiloPiezas.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/estiloR.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/estiloR.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/estilo_r.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/estilo_r.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/estilo_u.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/estilo_u.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/Colecciones.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/Colecciones.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/Ingresar.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/Ingresar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/colecciones_U.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/colecciones_U.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/crearPiezas.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/crearPiezas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/recargar.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/recargar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/registro.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/registro.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/styles/estiloC.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/styles/estiloC.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/styles/estiloI.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/styles/estiloI.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/styles/estiloPiezas.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/styles/estiloPiezas.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/styles/estiloR.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/styles/estiloR.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/styles/estilo_r.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/styles/estilo_r.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/styles/estilo_u.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/styles/estilo_u.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/styles/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/TiendaDeArteVale-1.0-SNAPSHOT/styles/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/DTOS/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/DTOS/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/UserService/LogInServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/UserService/LogInServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/UserService/SingUpServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/UserService/SingUpServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/UserService/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/UserService/UserService.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="27Wtm1AbzuWLkLZPHblkJ0yfBQo" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
+  </component>
+  <component name="RunManager">
+    <configuration name="JBoss/WildFly 26.0.1.Final" type="JBossConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="JBoss/WildFly 26.0.1.Final" ALTERNATIVE_JRE_ENABLED="false">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/Taller2Servlets-1.0-SNAPSHOT" />
+      <deployment>
+        <artifact name="Taller2Servlets:war exploded">
+          <settings />
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="SERVER" value="" />
+        <option name="BINDING_SET_NAME" value="" />
+        <option name="DOMAIN" value="false" />
+        <option name="SERVER_GROUP" value="" />
+        <option name="USERNAME" value="" />
+        <option name="CREDENTIAL_ALIAS" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="JBoss" />
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="Taller2Servlets:war exploded" />
+        </option>
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="38f4fa0b-b747-4ba4-863e-c06c633b4994" name="Changes" comment="" />
+      <created>1649447826712</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1649447826712</updated>
+      <workItem from="1649447828680" duration="3238000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

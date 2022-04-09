@@ -1,0 +1,66 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0px;
+    font-family: 'Comfortaa', cursive;
+}
+
+.form {
+    width: 450px;
+    padding: 30px;
+    margin: auto;
+    margin-top: 100px;
+    background: rgb(84, 99, 255);
+    border-radius: 5px;
+}
+
+.titulo {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.cajas {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: none;
+
+}
+
+.termino1 {
+    text-align: center;
+    color: white;
+}
+
+.btn {
+    width: 100%;
+    padding: 15px;
+    border-radius: 2px;
+    border: none;
+    margin: 20px 0;
+    font-size: 15px;
+    background: #5D8BF4;
+    color: white;
+
+
+}
+
+.tengo-cuenta {
+    text-align: center;
+    color: wheat;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.navbar-brand {
+    margin-right: 80rem;
+    margin-left: 2rem;
+}
+
+.nav-link {
+    color: white;
+}

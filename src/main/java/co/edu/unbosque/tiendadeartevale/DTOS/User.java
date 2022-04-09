@@ -1,6 +1,7 @@
 package co.edu.unbosque.tiendadeartevale.DTOS;
 
 import com.opencsv.bean.CsvBindByName;
+
 public class User {
 
     @CsvBindByName

@@ -1,14 +1,15 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-body{
+
+body {
     margin: 0px;
     font-family: 'Comfortaa', cursive;
 }
 
-.form{
+.form {
     width: 450px;
     padding: 30px;
     margin: auto;
@@ -16,11 +17,13 @@ body{
     background: rgb(84, 99, 255);
     border-radius: 5px;
 }
-.titulo{
+
+.titulo {
     color: white;
     margin-bottom: 20px;
 }
-.cajas{
+
+.cajas {
     width: 100%;
     padding: 15px;
     margin-bottom: 20px;
@@ -28,11 +31,12 @@ body{
 
 }
 
-.termino1{
+.termino1 {
     text-align: center;
     color: white;
 }
-.btn{
+
+.btn {
     width: 100%;
     padding: 15px;
     border-radius: 2px;
@@ -45,7 +49,7 @@ body{
 
 }
 
-.tengo-cuenta{
+.tengo-cuenta {
     text-align: center;
     color: wheat;
     font-weight: bold;
@@ -56,6 +60,7 @@ body{
     margin-right: 80rem;
     margin-left: 2rem;
 }
+
 .nav-link {
     color: white;
 }
