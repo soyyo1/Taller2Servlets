@@ -1,4 +1,6 @@
-package co.edu.unbosque.tiendadeartevale.UserService;
+package co.edu.unbosque.tiendadeartevale;
+import co.edu.unbosque.tiendadeartevale.UserService.UserService;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -8,7 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
     @WebServlet(name = "signup", value = "/signup")
-    public class SingUpServlet extends HttpServlet {
+    public class SignUpServlet extends HttpServlet {
 
         public void init() {}
 
@@ -23,7 +25,7 @@ import java.io.IOException;
                 e.printStackTrace();
             }
 
-            response.sendRedirect("./index.html");
+            response.sendRedirect("./colecciones_U.html");
         }
 
         public void destroy() {}

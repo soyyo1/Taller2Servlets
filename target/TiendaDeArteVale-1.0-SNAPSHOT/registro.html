@@ -44,8 +44,12 @@
     <input class="cajas" type="email" placeholder="Email" required maxlength="30">
     <input name="password" class="cajas" type="password" placeholder="Password" required maxlength="30">
 
-    <p class="termino1"><input type="checkbox"> Cuenta Usuario </p>
-    <p class="termino1"><input type="checkbox"> Cuenta Artista </p>
+    <select name="Rol" id="rol">
+        <option value="comprador">Comprador</option>
+        <option value="artista">Artista</option>
+    </select>
+    <p input name = "comprador" class="termino1"><input type="checkbox"> Cuenta Usuario </p>
+    <p input name = "artista" class="termino1"><input type="checkbox"> Cuenta Artista </p>
 
     <input type="submit" class="btn" value="REGISTRAR">
 
