@@ -2,28 +2,24 @@
     margin-right: 2rem;
     margin-left: 2rem;
 }
-
 .nav-link {
     color: white;
 }
-
-.nav-link.active {
+.nav-link.active{
     margin-left: 1500px;
 }
 
-body {
+body{
     margin: 0px;
     font-family: 'Comfortaa', cursive;
 }
-
 .cover-small {
     height: 200px;
     background-blend-mode: normal;
 }
-
 .card {
-    border-color: cornflowerblue;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0, 1), 0 4px 6px -1px rgba(0, 0, 0, 0, 1);
+    border-color:cornflowerblue ;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0), 0 4px 6px -1px rgba(0, 0, 0, 0);
     display: flex;
 }
 
@@ -32,26 +28,21 @@ body {
     background-color: #5463FF;
     border-color: #5463FF;
 }
-
 .col-3 {
     text-decoration: none;
 }
-
 .clover {
     color: white;
     height: 200px;
     background-color: #5463FF;
 }
-
-td {
+td{
     padding-left: 20px;
 }
-
-h1 {
+h1{
     padding-left: 20px;
     padding-top: 20px;
 }
-
 .form button {
     text-transform: uppercase;
     outline: 0;
