@@ -8,13 +8,13 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href=styles/estiloR.css>
+    <link rel="stylesheet" href=./styles/estiloR.css>
 </head>
 
 <body>
 <!-- Este es el encabezado el que contiene el menu -->
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#5463FF">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#FFD3B4">
         <a class="navbar-brand" href="index.html">
             <img src="assets/V_(logo_2010).svg.png" alt="" width="70" height="60">
         </a>
@@ -26,30 +26,29 @@
                 <a class="nav-link" href="registro.html">Registrese</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="Colecciones.html">colecciones</a>
+                <a class="nav-link" href="index.html">colecciones</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Acerca de</a>
+                <a class="nav-link" href="index.html">Acerca de</a>
             </li>
         </ul>
     </nav>
 </header>
 <!-- Este es el formulario que tiene que hacer el ususario para registrarse -->
+<form class="form">
 
-
-<h1 class="titulo">Registrarse</h1>
-<form class="form" action="./signup" method="post">
+    <h1 class="titulo">Registrarse</h1>
+    <form class="form" action="./signup" method="post">
     <input class="cajas" type="text" placeholder="Name" required maxlength="30">
     <input name="username" class="cajas" type="text" placeholder="UserName" required maxlength="30">
     <input class="cajas" type="email" placeholder="Email" required maxlength="30">
     <input name="password" class="cajas" type="password" placeholder="Password" required maxlength="30">
 
     <select name="Rol" id="rol">
+        <option selected>Rol</option>
         <option value="comprador">Comprador</option>
         <option value="artista">Artista</option>
     </select>
-    <p input name = "comprador" class="termino1"><input type="checkbox"> Cuenta Usuario </p>
-    <p input name = "artista" class="termino1"><input type="checkbox"> Cuenta Artista </p>
 
     <input type="submit" class="btn" value="REGISTRAR">
 
@@ -57,7 +56,6 @@
     <p class="tengo-cuenta"><a href="Ingresar.html" class="tengo-cuenta">Ya tengo cuenta</a></p>
 
 </form>
-
 
 </body>
 
