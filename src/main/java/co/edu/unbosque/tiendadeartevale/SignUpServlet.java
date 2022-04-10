@@ -30,11 +30,13 @@ import java.io.IOException;
             }
 
             if (role.equals("artista")){
-                RequestDispatcher dispatcher = request.getRequestDispatcher("./colecciones_U.html");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("./perfilArtista.html");
                 dispatcher.forward(request, response);
+                response.sendRedirect("./perfilArtista.html");
+                System.out.println("entro");
             }
             else if (role.equalsIgnoreCase("comprador")){
-                RequestDispatcher dispatcher = request.getRequestDispatcher("./verPiezas.html");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("./perfilComprador.html");
                 dispatcher.forward(request, response);
             }
         }
