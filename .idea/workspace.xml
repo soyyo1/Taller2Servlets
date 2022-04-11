@@ -9,7 +9,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="38f4fa0b-b747-4ba4-863e-c06c633b4994" name="Changes" comment="" />
+    <list default="true" id="38f4fa0b-b747-4ba4-863e-c06c633b4994" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/crearPiezas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/crearPiezas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/perfilArtista.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/perfilArtista.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/perfilComprador.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/perfilComprador.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/recargarArtista.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/recargarArtista.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/recargarComprador.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/recargarComprador.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/META-INF/MANIFEST.MF" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,6 +40,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -38,7 +48,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JavaScript Debug.perfilArtista.html">
     <configuration name="JBoss/WildFly 26.0.1.Final" type="JBossConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="JBoss/WildFly 26.0.1.Final" ALTERNATIVE_JRE_ENABLED="false">
       <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/Taller2Servlets-1.0-SNAPSHOT" />
       <deployment>
@@ -77,6 +87,30 @@
         </option>
       </method>
     </configuration>
+    <configuration name="crearPiezas.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:8080/Taller2Servlets-1.0-SNAPSHOT/crearPiezas.html">
+      <method v="2" />
+    </configuration>
+    <configuration name="perfilArtista.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:8080/Taller2Servlets-1.0-SNAPSHOT/perfilArtista.html">
+      <method v="2" />
+    </configuration>
+    <configuration name="perfilComprador.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:8080/Taller2Servlets-1.0-SNAPSHOT/perfilComprador.html">
+      <method v="2" />
+    </configuration>
+    <configuration name="recargarArtista.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:8080/Taller2Servlets-1.0-SNAPSHOT/recargarArtista.html">
+      <method v="2" />
+    </configuration>
+    <configuration name="registro.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:8080/Taller2Servlets-1.0-SNAPSHOT/registro.html">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.perfilArtista.html" />
+        <item itemvalue="JavaScript Debug.perfilComprador.html" />
+        <item itemvalue="JavaScript Debug.recargarArtista.html" />
+        <item itemvalue="JavaScript Debug.crearPiezas.html" />
+        <item itemvalue="JavaScript Debug.registro.html" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -91,6 +125,7 @@
       <workItem from="1649547493167" duration="880000" />
       <workItem from="1649548404357" duration="1007000" />
       <workItem from="1649549451002" duration="308000" />
+      <workItem from="1649633065254" duration="2339000" />
     </task>
     <servers />
   </component>

@@ -1,17 +1,16 @@
-* {
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
-body {
+body{
     margin: 0px;
     font-family: 'Comfortaa', cursive;
     text-align: center;
-    background: url("https://media.admagazine.com/photos/618a702ea986d2482cad2816/master/w_1600%2Cc_limit/55380.jpg");
+    background: #F6E6E4;
+    color: black;
 }
-
-.form {
+.form{
     width: 450px;
     padding: 30px;
     margin: auto;
@@ -19,15 +18,12 @@ body {
     background: rgb(84, 99, 255);
     border-radius: 5px;
 }
-
-.titulo {
+.titulo{
     margin-top: 40px;
-    color: white;
     margin-bottom: 20px;
     text-align: center;
 }
-
-.cajas {
+.cajas{
     text-align: left;
     width: 50%;
     padding: 15px;
@@ -36,33 +32,53 @@ body {
     border-radius: 5px;
     font-family: inherit;
 }
-
-.navbar {
+.navbar{
     display: flex;
     flex-direction: row;
+    background-color: #FFD3B4
 }
-
 .navbar-brand {
     margin-left: 2rem;
 }
-
 .crear-piezas {
-    width: 40%;
+    width: 500px;
     margin-right: auto;
     margin-left: auto;
-    background-color: #5463FF;
+    background-color: #FFAAA7;
     line-height: 60px;
     border-radius: 5px;
+    color: black;
 }
-
-.selec-archivo {
+.selec-archivo{
     text-align: center;
     margin-top: 0%;
     margin-bottom: 0%;
 }
-
-.boton {
+.boton{
     border: none;
     font-size: 10px;
     padding: 15px;
+}
+.nav-link {
+    color: black;
+}
+.nav-link.active{
+    margin-left: 15px;
+    color: black;
+}
+.nav-link:hover {
+    color: black;
+}
+.cajas {
+    height: 60px;
+}
+.btn-primary {
+    background-color: #FFD3B4;
+    border-color:  #FFD3B4;
+    color: black;
+}
+.clover {
+    color: black;
+    height: 200px;
+    background-color: #FFD3B4;
 }

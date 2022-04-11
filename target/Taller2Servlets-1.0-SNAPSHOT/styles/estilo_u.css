@@ -1,61 +1,65 @@
 .navbar-brand {
-    margin-right: 2rem;
+    margin-right: 0rem;
     margin-left: 2rem;
 }
-
 .nav-link {
-    color: white;
+    color: black;
+}
+.nav-link:hover {
+    color: black;
+}
+.clover {
+    color: black;
+    height: 200px;
+    background-color: #FFD3B4;
+}
+.nav-link.active{
+    margin-left: 15px;
 }
 
-.nav-link.active {
-    margin-left: 1500px;
-}
-
-body {
+body{
     margin: 0px;
     font-family: 'Comfortaa', cursive;
+    background-color: #F6E6E4;
 }
-
 .cover-small {
     height: 200px;
     background-blend-mode: normal;
 }
-
 .card {
-    border-color: cornflowerblue;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0, 1), 0 4px 6px -1px rgba(0, 0, 0, 0, 1);
+    border-color:#FFAAA7 ;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0), 0 4px 6px -1px rgba(0, 0, 0, 0);
     display: flex;
 }
-
-.btn-warning {
-    color: white;
-    background-color: #5463FF;
-    border-color: #5463FF;
+.btn-primary {
+    background-color: #FFD3B4;
+    color: black;
+    border-color: #FFD3B4;
+}
+.btn-primary:hover {
+    background-color: #FFD3B4;
+    color: black;
+    border-color: #FFD3B4;
+}
+.card-body {
+    background-color: #FFAAA7;
+    border-color: #FFAAA7;
 }
 
 .col-3 {
     text-decoration: none;
 }
 
-.clover {
-    color: white;
-    height: 200px;
-    background-color: #5463FF;
-}
-
-td {
+td{
     padding-left: 20px;
 }
-
-h1 {
+h1{
     padding-left: 20px;
     padding-top: 20px;
 }
-
 .form button {
     text-transform: uppercase;
     outline: 0;
-    background: #5463FF;
     width: 100%;
     border: 0;
     padding: 15px;
@@ -64,4 +68,10 @@ h1 {
     -webkit-transition: all 0.3 ease;
     transition: all 0.3 ease;
     cursor: pointer;
+}
+section {
+    background-color: #F6E6E4;
+}
+body {
+    background-color: #F6E6E4;
 }
