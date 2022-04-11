@@ -2,6 +2,7 @@ package co.edu.unbosque.tiendadeartevale;
 
 import co.edu.unbosque.tiendadeartevale.UserService.NFTService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -39,6 +40,8 @@ public class NFTServlet extends HttpServlet {
 
         try {
             new NFTService().createNFT(titulo, coins, nombreArchivo, getServletContext().getRealPath("") + File.separator);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("./colecciones_U.html");
+            dispatcher.forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }

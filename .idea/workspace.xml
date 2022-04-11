@@ -10,14 +10,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="38f4fa0b-b747-4ba4-863e-c06c633b4994" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unbosque/tiendadeartevale/FCoinsServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unbosque/tiendadeartevale/FCoinsServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unbosque/tiendadeartevale/NFTServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unbosque/tiendadeartevale/NFTServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/crearPiezas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/crearPiezas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/perfilArtista.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/perfilArtista.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/perfilComprador.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/perfilComprador.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/recargarArtista.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/recargarArtista.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/recargarComprador.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/recargarComprador.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/co/edu/unbosque/tiendadeartevale/DTOS/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/co/edu/unbosque/tiendadeartevale/DTOS/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/co/edu/unbosque/tiendadeartevale/FCoinsServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/co/edu/unbosque/tiendadeartevale/FCoinsServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/co/edu/unbosque/tiendadeartevale/LogInServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/co/edu/unbosque/tiendadeartevale/LogInServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/co/edu/unbosque/tiendadeartevale/NFTServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/co/edu/unbosque/tiendadeartevale/NFTServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/co/edu/unbosque/tiendadeartevale/SignUpServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/co/edu/unbosque/tiendadeartevale/SignUpServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/co/edu/unbosque/tiendadeartevale/UserService/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/co/edu/unbosque/tiendadeartevale/UserService/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/crearPiezas.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/crearPiezas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/verPiezas.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/verPiezas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/DTOS/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/DTOS/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/FCoinsServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/FCoinsServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/LogInServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/LogInServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/NFTServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/NFTServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/SignUpServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/SignUpServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/UserService/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/UserService/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/nfts.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/users.csv" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +44,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="27Wtm1AbzuWLkLZPHblkJ0yfBQo" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -40,7 +56,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../Escritorio/Taller2Servlets" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -48,7 +64,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
   </component>
-  <component name="RunManager" selected="JavaScript Debug.perfilArtista.html">
+  <component name="RunManager" selected="JBoss/WildFly Server.JBoss/WildFly 26.0.1.Final">
     <configuration name="JBoss/WildFly 26.0.1.Final" type="JBossConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="JBoss/WildFly 26.0.1.Final" ALTERNATIVE_JRE_ENABLED="false">
       <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/Taller2Servlets-1.0-SNAPSHOT" />
       <deployment>
