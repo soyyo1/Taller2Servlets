@@ -16,7 +16,7 @@ import javax.servlet.annotation.*;
     public class LogInServlet extends HttpServlet {
 
         public void init() {}
-
+// metodo para ingresar con un usuario existente
         public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
             response.setContentType("text/html");
 
@@ -36,8 +36,6 @@ import javax.servlet.annotation.*;
                 Cookie cookie = new Cookie("role", userFounded.getRole());
                 cookie.setMaxAge(20);
                 response.addCookie(cookie);
-
-                System.out.println(userFounded.getUsername());
 
                 RequestDispatcher dispatcher = request.getRequestDispatcher("./colecciones_U.html");
                 dispatcher.forward(request, response);

@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Taller2Servlets" target="1.8" />
+      <module name="Taller2Servlets" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

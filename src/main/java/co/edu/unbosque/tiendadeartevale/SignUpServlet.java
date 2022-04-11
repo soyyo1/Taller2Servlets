@@ -1,6 +1,8 @@
 package co.edu.unbosque.tiendadeartevale;
 import co.edu.unbosque.tiendadeartevale.UserService.UserService;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,19 +15,28 @@ import java.io.IOException;
     public class SignUpServlet extends HttpServlet {
 
         public void init() {}
-
-        public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+// metodo para crear un nuevo usuario
+        public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
             String username = request.getParameter("username");
             String password = request.getParameter("password");
+            String role = request.getParameter("role");
+            String money = String.valueOf(0);
 
             try {
-                new UserService().createUser(username, password, getServletContext().getRealPath("") + File.separator);
+                new UserService().createUser(username, password, role, money,getServletContext().getRealPath("") + File.separator);
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            response.sendRedirect("./colecciones_U.html");
+            if (role.equals("artista")){
+                RequestDispatcher dispatcher = request.getRequestDispatcher("./colecciones_U.html");
+                dispatcher.forward(request, response);
+            }
+            else if (role.equalsIgnoreCase("comprador")){
+                RequestDispatcher dispatcher = request.getRequestDispatcher("./verPiezas.html");
+                dispatcher.forward(request, response);
+            }
         }
 
         public void destroy() {}

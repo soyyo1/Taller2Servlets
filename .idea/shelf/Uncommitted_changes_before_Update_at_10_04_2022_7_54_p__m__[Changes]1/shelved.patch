@@ -1,0 +1,1507 @@
+Index: src/main/java/co/edu/unbosque/tiendadeartevale/NFTServlet.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package co.edu.unbosque.tiendadeartevale;\r\n\r\nimport co.edu.unbosque.tiendadeartevale.UserService.NFTService;\r\n\r\nimport javax.servlet.ServletException;\r\nimport javax.servlet.annotation.MultipartConfig;\r\nimport javax.servlet.annotation.WebServlet;\r\nimport javax.servlet.http.HttpServlet;\r\nimport javax.servlet.http.HttpServletRequest;\r\nimport javax.servlet.http.HttpServletResponse;\r\nimport javax.servlet.http.Part;\r\nimport java.io.File;\r\nimport java.io.IOException;\r\n\r\n@WebServlet(name = \"subir-nft\", value = \"/subir-nft\")\r\n@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)\r\npublic class NFTServlet extends HttpServlet {\r\n    public void init() {\r\n    }\r\n\r\n    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {\r\n        String titulo = request.getParameter(\"titulo\");\r\n        String coins = request.getParameter(\"coins\");\r\n\r\n        String pathFolder = getServletContext().getRealPath(\"\") + File.separator + \"images\";\r\n        File file = new File(pathFolder);\r\n\r\n        if (!(file.exists())) {\r\n            file.mkdir();\r\n        }\r\n\r\n        NFTService nftService = new NFTService();\r\n\r\n        String nombreArchivo = null;\r\n        for (Part part : request.getParts()) {\r\n            nombreArchivo = nftService.generarTextoAleatorio(8) + part.getSubmittedFileName();\r\n            part.write(pathFolder + File.separator + nombreArchivo);\r\n        }\r\n\r\n        try {\r\n            new NFTService().createNFT(titulo, coins, nombreArchivo, getServletContext().getRealPath(\"\") + File.separator);\r\n        } catch (Exception e) {\r\n            e.printStackTrace();\r\n        }\r\n\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/co/edu/unbosque/tiendadeartevale/NFTServlet.java b/src/main/java/co/edu/unbosque/tiendadeartevale/NFTServlet.java
+--- a/src/main/java/co/edu/unbosque/tiendadeartevale/NFTServlet.java	
++++ b/src/main/java/co/edu/unbosque/tiendadeartevale/NFTServlet.java	
+@@ -45,4 +45,4 @@
+ 
+ 
+     }
+-}
++}
+\ No newline at end of file
+Index: src/main/resources/users.csv
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>username,password,role
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/users.csv b/src/main/resources/users.csv
+--- a/src/main/resources/users.csv	
++++ b/src/main/resources/users.csv	
+@@ -1,1 +1,1 @@
+-username,password,role
+\ No newline at end of file
++username,password,role,money
+\ No newline at end of file
+Index: src/main/java/co/edu/unbosque/tiendadeartevale/LogInServlet.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package co.edu.unbosque.tiendadeartevale;\r\n\r\n\r\nimport java.io.*;\r\nimport java.util.List;\r\n\r\nimport co.edu.unbosque.tiendadeartevale.DTOS.User;\r\nimport co.edu.unbosque.tiendadeartevale.UserService.UserService;\r\n\r\nimport javax.servlet.RequestDispatcher;\r\nimport javax.servlet.ServletException;\r\nimport javax.servlet.http.*;\r\nimport javax.servlet.annotation.*;\r\n\r\n    @WebServlet(name = \"login\", value = \"/login\")\r\n    public class LogInServlet extends HttpServlet {\r\n\r\n        public void init() {}\r\n\r\n        public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {\r\n            response.setContentType(\"text/html\");\r\n\r\n            String username = request.getParameter(\"username\");\r\n            String password = request.getParameter(\"password\");\r\n\r\n            List<User> users = new UserService().getUsers();\r\n\r\n            User userFounded = users.stream()\r\n                    .filter(user -> username.equals(user.getUsername()) && password.equals(user.getPassword()))\r\n                    .findFirst()\r\n                    .orElse(null);\r\n\r\n            if (userFounded != null) {\r\n                request.setAttribute(\"role\", userFounded.getRole());\r\n\r\n                Cookie cookie = new Cookie(\"role\", userFounded.getRole());\r\n                cookie.setMaxAge(20);\r\n                response.addCookie(cookie);\r\n\r\n                System.out.println(userFounded.getUsername());\r\n\r\n                RequestDispatcher dispatcher = request.getRequestDispatcher(\"./colecciones_U.html\");\r\n                dispatcher.forward(request, response);\r\n\r\n            } else {\r\n                response.sendRedirect(\"./401.html\");\r\n            }\r\n        }\r\n\r\n        public void destroy() {}\r\n    }\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/co/edu/unbosque/tiendadeartevale/LogInServlet.java b/src/main/java/co/edu/unbosque/tiendadeartevale/LogInServlet.java
+--- a/src/main/java/co/edu/unbosque/tiendadeartevale/LogInServlet.java	
++++ b/src/main/java/co/edu/unbosque/tiendadeartevale/LogInServlet.java	
+@@ -16,7 +16,7 @@
+     public class LogInServlet extends HttpServlet {
+ 
+         public void init() {}
+-
++// metodo para ingresar con un usuario existente
+         public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+             response.setContentType("text/html");
+ 
+@@ -37,8 +37,6 @@
+                 cookie.setMaxAge(20);
+                 response.addCookie(cookie);
+ 
+-                System.out.println(userFounded.getUsername());
+-
+                 RequestDispatcher dispatcher = request.getRequestDispatcher("./colecciones_U.html");
+                 dispatcher.forward(request, response);
+ 
+Index: src/main/java/co/edu/unbosque/tiendadeartevale/SignUpServlet.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package co.edu.unbosque.tiendadeartevale;\r\nimport co.edu.unbosque.tiendadeartevale.UserService.UserService;\r\n\r\nimport javax.servlet.annotation.WebServlet;\r\nimport javax.servlet.http.HttpServlet;\r\nimport javax.servlet.http.HttpServletRequest;\r\nimport javax.servlet.http.HttpServletResponse;\r\n\r\nimport java.io.File;\r\nimport java.io.IOException;\r\n\r\n    @WebServlet(name = \"signup\", value = \"/signup\")\r\n    public class SignUpServlet extends HttpServlet {\r\n\r\n        public void init() {}\r\n\r\n        public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {\r\n\r\n            String username = request.getParameter(\"username\");\r\n            String password = request.getParameter(\"password\");\r\n\r\n            try {\r\n                new UserService().createUser(username, password, getServletContext().getRealPath(\"\") + File.separator);\r\n            } catch (Exception e) {\r\n                e.printStackTrace();\r\n            }\r\n\r\n            response.sendRedirect(\"./colecciones_U.html\");\r\n        }\r\n\r\n        public void destroy() {}\r\n    }
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/co/edu/unbosque/tiendadeartevale/SignUpServlet.java b/src/main/java/co/edu/unbosque/tiendadeartevale/SignUpServlet.java
+--- a/src/main/java/co/edu/unbosque/tiendadeartevale/SignUpServlet.java	
++++ b/src/main/java/co/edu/unbosque/tiendadeartevale/SignUpServlet.java	
+@@ -1,6 +1,8 @@
+ package co.edu.unbosque.tiendadeartevale;
+ import co.edu.unbosque.tiendadeartevale.UserService.UserService;
+ 
++import javax.servlet.RequestDispatcher;
++import javax.servlet.ServletException;
+ import javax.servlet.annotation.WebServlet;
+ import javax.servlet.http.HttpServlet;
+ import javax.servlet.http.HttpServletRequest;
+@@ -13,19 +15,28 @@
+     public class SignUpServlet extends HttpServlet {
+ 
+         public void init() {}
+-
+-        public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
++// metodo para crear un nuevo usuario
++        public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+ 
+             String username = request.getParameter("username");
+             String password = request.getParameter("password");
++            String role = request.getParameter("role");
++            String money = String.valueOf(0);
+ 
+             try {
+-                new UserService().createUser(username, password, getServletContext().getRealPath("") + File.separator);
++                new UserService().createUser(username, password, role, money,getServletContext().getRealPath("") + File.separator);
+             } catch (Exception e) {
+                 e.printStackTrace();
+             }
+ 
+-            response.sendRedirect("./colecciones_U.html");
++            if (role.equals("artista")){
++                RequestDispatcher dispatcher = request.getRequestDispatcher("./colecciones_U.html");
++                dispatcher.forward(request, response);
++            }
++            else if (role.equalsIgnoreCase("comprador")){
++                RequestDispatcher dispatcher = request.getRequestDispatcher("./verPiezas.html");
++                dispatcher.forward(request, response);
++            }
+         }
+ 
+         public void destroy() {}
+Index: src/main/java/co/edu/unbosque/tiendadeartevale/UserService/UserService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package co.edu.unbosque.tiendadeartevale.UserService;\r\n\r\nimport co.edu.unbosque.tiendadeartevale.DTOS.User;\r\nimport com.opencsv.bean.*;\r\nimport java.io.*;\r\nimport java.nio.charset.StandardCharsets;\r\nimport java.util.List;\r\nimport java.util.Random;\r\n\r\npublic class UserService {\r\n\r\n    public List<User> getUsers() throws IOException {\r\n\r\n        List<User> users;\r\n\r\n        try (InputStream is = UserService.class.getClassLoader()\r\n                .getResourceAsStream(\"users.csv\")) {\r\n\r\n            HeaderColumnNameMappingStrategy<User> strategy = new HeaderColumnNameMappingStrategy<>();\r\n            strategy.setType(User.class);\r\n\r\n            try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {\r\n\r\n                CsvToBean<User> csvToBean = new CsvToBeanBuilder<User>(br)\r\n                        .withType(User.class)\r\n                        .withMappingStrategy(strategy)\r\n                        .withIgnoreLeadingWhiteSpace(true)\r\n                        .build();\r\n\r\n                users = csvToBean.parse();\r\n            }\r\n        }\r\n\r\n        return users;\r\n    }\r\n\r\n    public void createUser(String username, String password, String path) throws IOException {\r\n        String newLine = \"\\n\" + username + \",\" + password + \",customer\";\r\n        FileOutputStream os = new FileOutputStream(path + \"WEB-INF/classes/\" + \"users.csv\", true);\r\n        os.write(newLine.getBytes());\r\n        os.close();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/co/edu/unbosque/tiendadeartevale/UserService/UserService.java b/src/main/java/co/edu/unbosque/tiendadeartevale/UserService/UserService.java
+--- a/src/main/java/co/edu/unbosque/tiendadeartevale/UserService/UserService.java	
++++ b/src/main/java/co/edu/unbosque/tiendadeartevale/UserService/UserService.java	
+@@ -34,8 +34,8 @@
+         return users;
+     }
+ 
+-    public void createUser(String username, String password, String path) throws IOException {
+-        String newLine = "\n" + username + "," + password + ",customer";
++    public void createUser(String username, String password, String role, String money, String path) throws IOException {
++        String newLine = "\n" + username + "," + password + "," + role + "," + money + "\n";
+         FileOutputStream os = new FileOutputStream(path + "WEB-INF/classes/" + "users.csv", true);
+         os.write(newLine.getBytes());
+         os.close();
+Index: src/main/webapp/index.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"es\">\r\n<!-- informacion de la pagina, fuentes y bootstrap -->\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <title>Vale!</title>\r\n    <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\"\r\n          integrity=\"sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3\" crossorigin=\"anonymous\">\r\n    <link rel=\"stylesheet\" href=styles/styles.css/>\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap\" rel=\"stylesheet\">\r\n\r\n</head>\r\n\r\n<body>\r\n<!-- Este es el encabezado que contiene el menu -->\r\n<header>\r\n    <nav class=\"navbar navbar-expand-lg navbar-light\" style=\"background-color:#5463FF\">\r\n        <a class=\"navbar-brand\" href=\"index.html\">\r\n            <img src=\"assets/V_(logo_2010).svg.png\" alt=\"\" width=\"70\" height=\"60\">\r\n        </a>\r\n        <ul class=\"nav\">\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link active\" aria-current=\"page\" href=\"Ingresar.html\">Iniciar sesion</a>\r\n            </li>\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link\" href=\"registro.html\">Regístrese</a>\r\n            </li>\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link\" href=\"Colecciones.html\">Colecciones</a>\r\n            </li>\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link\" href=\"#\">Acerca de</a>\r\n            </li>\r\n        </ul>\r\n    </nav>\r\n    <div class=\"cover d-flex  justify-content-center align-items-center flex-column\">\r\n        <h1>\r\n            VALE!\r\n        </h1>\r\n        <p>\r\n            La mejor página de arte del país\r\n        </p>\r\n        <button class=\"btn btn-warning\">\r\n            Conoce más\r\n        </button>\r\n    </div>\r\n</header>\r\n<!-- Toda esta seccion pertenece a los NFTs -->\r\n<section>\r\n    <div class=\"container mt-5 mb-5  \" id=\"colecciones\">\r\n\r\n        <div class=\"row justify-content-center\">\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/ZqSBa7z6umZTcSxAW_ux840NmefFD2r4HU-S7TdN4EnkFFVCS3aLbt-4MV9lIeI57pgJj1Tt6UI31ggeqp26RWwXk7HEDhicTv985g=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #1284</h5>\r\n                        <p class=\"card-text\">0.39 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/8rx6Odhi2tma8qhoeL7E2NBSjCaniZPyg0JBpnRm1-rik_zxD8veBG_p5sXXUYpRG4BU6-WyTGzExXbc29uTXM8RggCVp2bXT8oGLw=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #1289 </h5>\r\n                        <p class=\"card-text\">0.57 &#x1F48E </p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/N8__4Z-lsQEnTd8JO_P-3pPB-7i_C41czbw1doZnl4sIIpilh4yv74587R9HkpmRlERdIeX6lb4tJpG3eHuHkiOuyh1Or-ya8n9z=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #1659 </h5>\r\n                        <p class=\"card-text\">0.31 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/kiMK5F6sjf8Dgza5mDXIIIkuabjchdhPqtNrlcCQSb0OpiRTJS8vzcMWKN5-YuizBFdLWhjoq6aqZTkAT49UkFMTqvi7gTE_6bi4tFQ=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #5326 </h5>\r\n                        <p class=\"card-text\">0.87 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/CtikgQ3yF5BwGgxdDiXWcUULrKtR88IEKSHb2U3vkVSSskaO63g-6NdzYMmzz-YoydgAlF_CNHJ4gyH6PG573UH6VImp2knyfTSR=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #4264 </h5>\r\n                        <p class=\"card-text\">0.16 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/QLFWtwpnc01fcTFM4Motbp296kM9Viv3IXmcfkoMlEL5IzMANfnRDB0z8W4eBdPIlYmjLnV9wwA8__zvbkkfMwIQWxegeZdQq_a6Sg=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #8954 </h5>\r\n                        <p class=\"card-text\">0.36 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/HLLghMW8zk3QyJWqWowpfJf2D7gK6rhq_E039gzuPALEFNd_CFuiUuPEJrNmeaSCsf6OTwkhRPhOgBHthlswI2OUr-ME6HdQj3Xv7A=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #7452 </h5>\r\n                        <p class=\"card-text\">0.78 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/_wS9uIxieBvkPoEAmNsppTQwFDHhshs7BAFHuis-FkPwOqsW5-4MHcE0BhlpSG8Dkjy97uH9_rnsGOL-d3tOkZbBIFQHS2UVCzfaNg=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #3085 </h5>\r\n                        <p class=\"card-text\">0.72 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/JJIcaWJZj7ltpiDpterflDxzhRr2l-X-p--zlUbUM8kh23DS_XY4K7QVtPhu-Ntan1PW0iaDCMKxIIDH1lhbXZWyfLDaRf7L-jyfX_4=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #8035 </h5>\r\n                        <p class=\"card-text\">0.27 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/uesgLNkXBqdiQ33H1MS4c9rI7dZfhSNM4WZN0vMO2beNLTFTOWShpd4DZzZdwvpuZDafN6uxBuIBj1F5ubzeB-Wuoe5d-we0PaaCQg=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #3985 </h5>\r\n                        <p class=\"card-text\">0.24 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/-yuxbYKN1D0xyP8StLL14yLmR9mIe0_TeE_bw2ltS8au2Rao_DxxdGAwpxowr3onnZVbWsx8G2hFiNMXzkJflSpMLR2tiJ6wrXo4=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #5685 </h5>\r\n                        <p class=\"card-text\">0.56 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/AxzkT8hv3nnF5KROxMmQT9Wy-bs7bVVdMb8hQDlBZYceTksFqEtSK9nsOeYOCTNVyUyTu0hqffhX0HJPY5_A17oilETuo4632Rhbmv8=w286) ;\"></div>\r\n                    <a href=\"Colecciones.html\"></a>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #7085 </h5>\r\n                        <p class=\"card-text\">0.98 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n\r\n        </div>\r\n\r\n    </div>\r\n</section>\r\n<!-- Este pie de pagina muestra la infromacion donde se pueden remitir -->\r\n<footer>\r\n    <div class=\"clover d-flex justify-content-center align-items-center flex-column\">\r\n        <h6>\r\n            CONTÁCTENOS\r\n        </h6>\r\n        <p>\r\n            3008952086-3017287445\r\n        </p>\r\n        <img src=\"/assets/V_(logo_2010).svg.png\" alt=\"\" width=\"70\" height=\"60\">\r\n\r\n</footer>\r\n\r\n\r\n</body>\r\n\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/webapp/index.html b/src/main/webapp/index.html
+--- a/src/main/webapp/index.html	
++++ b/src/main/webapp/index.html	
+@@ -224,7 +224,7 @@
+             3008952086-3017287445
+         </p>
+         <img src="/assets/V_(logo_2010).svg.png" alt="" width="70" height="60">
+-
++    </div>
+ </footer>
+ 
+ 
+Index: target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/users.csv
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>username,password,role
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/users.csv b/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/users.csv
+--- a/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/users.csv	
++++ b/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/users.csv	
+@@ -1,1 +1,1 @@
+-username,password,role
+\ No newline at end of file
++username,password,role,money
+\ No newline at end of file
+Index: target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/nfts.csv
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/nfts.csv b/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/nfts.csv
+new file mode 100644
+--- /dev/null	
++++ b/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/nfts.csv	
+@@ -0,0 +1,1 @@
++titulo,coins,ruta
+\ No newline at end of file
+Index: target/Taller2Servlets-1.0-SNAPSHOT/verPiezas.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/Taller2Servlets-1.0-SNAPSHOT/verPiezas.html b/target/Taller2Servlets-1.0-SNAPSHOT/verPiezas.html
+new file mode 100644
+--- /dev/null	
++++ b/target/Taller2Servlets-1.0-SNAPSHOT/verPiezas.html	
+@@ -0,0 +1,92 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++    <meta charset="UTF-8">
++    <title>Ver Piezas de Arte</title>
++
++    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
++    <link rel="stylesheet" href=styles/verPiezas.css>
++</head>
++<body>
++<header>
++    <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#5463FF">
++        <a class="navbar-brand" href="index.html">
++            <img src="assets/V_(logo_2010).svg.png" alt="" width="70" height="60">
++        </a>
++    </nav>
++</header>
++<div>
++    <h1>Usuario Comprador</h1>
++    <table>
++        <tr>
++            <td>
++                <a href="#"><img src="assets/avatar1.png" width="300" height="300"></a>
++            </td>
++
++
++            <td>Usuario: juan_carlos02<br><br><br><br>
++                Saldo: 0.0 &#8383<br><br><br><br>
++                <a href="recargar.html" class="btn-recargar">Recargar FCoins</a>
++            </td>
++        </tr>
++    </table>
++</div>
++<p class="titulo"><h2>Piezas de Arte Disponibles</h2></p>
++
++<section>
++    <div class="container mt-5 mb-5  " id="colecciones">
++
++        <div class="row justify-content-center">
++            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
++                <div class="card">
++                    <div class="cover cover-small" style="background-image:url(https://areajugones.sport.es/wp-content/uploads/2020/04/the-last-of-part-2-wallpaper-desktop-1.jpg) ;"></div>
++                    <div class="art-body">
++                        <h5 class="titulo-obra">Título</h5>
++                        <p class="autor">Autor: </p>
++                        <a href="formulario1.html" class="btn-comprar">Fcoin &#8383 </a>
++                        <h6 class="precio">1.200</h6>
++                    </div>
++                </div>
++            </div>
++
++            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
++                <div class="card">
++                    <div class="cover cover-small" style="background-image:url(https://wallery.app/dufovot/times-square-wallpaper.webp) ;"></div>
++                    <div class="art-body">
++                        <h5 class="titulo-obra">Título</h5>
++                        <p class="autor">Autor: </p>
++                        <a href="formulario1.html" class="btn-comprar">Fcoin &#8383 </a>
++                        <h6 class="precio">1.200</h6>
++                    </div>
++                </div>
++            </div>
++
++            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
++                <div class="card">
++                    <div class="cover cover-small" style="background-image:url(https://wallery.app/dufovot/times-square-wallpaper.webp) ;"></div>
++                    <div class="art-body">
++                        <h5 class="titulo-obra">Título</h5>
++                        <p class="autor">Autor: </p>
++                        <a href="formulario1.html" class="btn-comprar">Fcoin &#8383 </a>
++                        <h6 class="precio">1.200</h6>
++                    </div>
++                </div>
++            </div>
++
++            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
++                <div class="card">
++                    <div class="cover cover-small" style="background-image:url(https://wallery.app/dufovot/times-square-wallpaper.webp) ;"></div>
++                    <div class="art-body">
++                        <h5 class="titulo-obra">Título</h5>
++                        <p class="autor">Autor: </p>
++                        <a href="formulario1.html" class="btn-comprar">Fcoin &#8383 </a>
++                        <h6 class="precio">1.200</h6>
++                    </div>
++                </div>
++            </div>
++        </div>
++    </div>
++</section>
++
++</body>
++</html>
+\ No newline at end of file
+Index: target/Taller2Servlets-1.0-SNAPSHOT/styles/verPiezas.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/Taller2Servlets-1.0-SNAPSHOT/styles/verPiezas.css b/target/Taller2Servlets-1.0-SNAPSHOT/styles/verPiezas.css
+new file mode 100644
+--- /dev/null	
++++ b/target/Taller2Servlets-1.0-SNAPSHOT/styles/verPiezas.css	
+@@ -0,0 +1,30 @@
++body {
++    margin: 0px;
++    font-family: 'Comfortaa', cursive;
++}
++h2{
++    background: #5463FF;
++    text-align: center;
++    width: 450px;
++    padding: 15px;
++    margin: auto;
++    margin-top: 30px;
++    border-radius: 5px;
++    color: white;
++}
++.card {
++    border-color:cornflowerblue ;
++    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0), 0 4px 6px -1px rgba(0, 0, 0, 0);
++    display: flex;
++}
++h1{
++    margin-left: 50px;
++}
++table{
++    padding: 15px;
++    margin-left: 50px;
++    width: 50%;
++    background: #5463FF;
++    color: white;
++
++}
+\ No newline at end of file
+Index: .idea/webContexts.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"WebContextManager\">\r\n    <option name=\"state\">\r\n      <map>\r\n        <entry key=\"file://$PROJECT_DIR$/src/main/webapp/HTML/registro.html\" value=\"file://$PROJECT_DIR$/src/main/webapp/HTML\" />\r\n        <entry key=\"file://$PROJECT_DIR$/src/main/webapp/crearPiezas.html\" value=\"file://$PROJECT_DIR$/src/main/webapp\" />\r\n      </map>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/webContexts.xml b/.idea/webContexts.xml
+--- a/.idea/webContexts.xml	
++++ b/.idea/webContexts.xml	
+@@ -5,6 +5,7 @@
+       <map>
+         <entry key="file://$PROJECT_DIR$/src/main/webapp/HTML/registro.html" value="file://$PROJECT_DIR$/src/main/webapp/HTML" />
+         <entry key="file://$PROJECT_DIR$/src/main/webapp/crearPiezas.html" value="file://$PROJECT_DIR$/src/main/webapp" />
++        <entry key="file://$PROJECT_DIR$/src/main/webapp/index.html" value="file://$PROJECT_DIR$/src/main/webapp" />
+       </map>
+     </option>
+   </component>
+Index: target/Taller2Servlets-1.0-SNAPSHOT/styles/estilo_u.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>.navbar-brand {\r\n    margin-right: 2rem;\r\n    margin-left: 2rem;\r\n}\r\n\r\n.nav-link {\r\n    color: white;\r\n}\r\n\r\n.nav-link.active {\r\n    margin-left: 1500px;\r\n}\r\n\r\nbody {\r\n    margin: 0px;\r\n    font-family: 'Comfortaa', cursive;\r\n}\r\n\r\n.cover-small {\r\n    height: 200px;\r\n    background-blend-mode: normal;\r\n}\r\n\r\n.card {\r\n    border-color: cornflowerblue;\r\n    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0, 1), 0 4px 6px -1px rgba(0, 0, 0, 0, 1);\r\n    display: flex;\r\n}\r\n\r\n.btn-warning {\r\n    color: white;\r\n    background-color: #5463FF;\r\n    border-color: #5463FF;\r\n}\r\n\r\n.col-3 {\r\n    text-decoration: none;\r\n}\r\n\r\n.clover {\r\n    color: white;\r\n    height: 200px;\r\n    background-color: #5463FF;\r\n}\r\n\r\ntd {\r\n    padding-left: 20px;\r\n}\r\n\r\nh1 {\r\n    padding-left: 20px;\r\n    padding-top: 20px;\r\n}\r\n\r\n.form button {\r\n    text-transform: uppercase;\r\n    outline: 0;\r\n    background: #5463FF;\r\n    width: 100%;\r\n    border: 0;\r\n    padding: 15px;\r\n    color: #FFFFFF;\r\n    font-size: 14px;\r\n    -webkit-transition: all 0.3 ease;\r\n    transition: all 0.3 ease;\r\n    cursor: pointer;\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/Taller2Servlets-1.0-SNAPSHOT/styles/estilo_u.css b/target/Taller2Servlets-1.0-SNAPSHOT/styles/estilo_u.css
+--- a/target/Taller2Servlets-1.0-SNAPSHOT/styles/estilo_u.css	
++++ b/target/Taller2Servlets-1.0-SNAPSHOT/styles/estilo_u.css	
+@@ -2,28 +2,24 @@
+     margin-right: 2rem;
+     margin-left: 2rem;
+ }
+-
+ .nav-link {
+     color: white;
+ }
+-
+-.nav-link.active {
++.nav-link.active{
+     margin-left: 1500px;
+ }
+ 
+-body {
++body{
+     margin: 0px;
+     font-family: 'Comfortaa', cursive;
+ }
+-
+ .cover-small {
+     height: 200px;
+     background-blend-mode: normal;
+ }
+-
+ .card {
+-    border-color: cornflowerblue;
+-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0, 1), 0 4px 6px -1px rgba(0, 0, 0, 0, 1);
++    border-color:cornflowerblue ;
++    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0), 0 4px 6px -1px rgba(0, 0, 0, 0);
+     display: flex;
+ }
+ 
+@@ -32,26 +28,21 @@
+     background-color: #5463FF;
+     border-color: #5463FF;
+ }
+-
+ .col-3 {
+     text-decoration: none;
+ }
+-
+ .clover {
+     color: white;
+     height: 200px;
+     background-color: #5463FF;
+ }
+-
+-td {
++td{
+     padding-left: 20px;
+ }
+-
+-h1 {
++h1{
+     padding-left: 20px;
+     padding-top: 20px;
+ }
+-
+ .form button {
+     text-transform: uppercase;
+     outline: 0;
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"CompilerConfiguration\">\r\n    <annotationProcessing>\r\n      <profile name=\"Maven default annotation processors profile\" enabled=\"true\">\r\n        <sourceOutputDir name=\"target/generated-sources/annotations\" />\r\n        <sourceTestOutputDir name=\"target/generated-test-sources/test-annotations\" />\r\n        <outputRelativeToContentRoot value=\"true\" />\r\n        <module name=\"Taller2Servlets\" />\r\n      </profile>\r\n    </annotationProcessing>\r\n    <bytecodeTargetLevel>\r\n      <module name=\"Taller2Servlets\" target=\"1.8\" />\r\n    </bytecodeTargetLevel>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/compiler.xml b/.idea/compiler.xml
+--- a/.idea/compiler.xml	
++++ b/.idea/compiler.xml	
+@@ -10,7 +10,7 @@
+       </profile>
+     </annotationProcessing>
+     <bytecodeTargetLevel>
+-      <module name="Taller2Servlets" target="1.8" />
++      <module name="Taller2Servlets" target="8" />
+     </bytecodeTargetLevel>
+   </component>
+ </project>
+\ No newline at end of file
+Index: target/Taller2Servlets-1.0-SNAPSHOT/styles/styles.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>body {\r\n    margin: 0px;\r\n    font-family: 'Comfortaa', cursive;\r\n}\r\n\r\n.cover {\r\n    height: 400px;\r\n    background-image: url(https://images.unsplash.com/photo-1507090960745-b32f65d3113a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80);\r\n    color: white;\r\n    background-size: cover;\r\n    background-position: center;\r\n    background-color: rgba(0, 0, 0, 0, 1);\r\n    background-blend-mode: darken;\r\n}\r\n\r\n.cover-small {\r\n    height: 200px;\r\n    background-blend-mode: normal;\r\n}\r\n\r\n.nav-link {\r\n    color: white;\r\n}\r\n\r\n.card {\r\n    border-color: cornflowerblue;\r\n    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0, 1), 0 4px 6px -1px rgba(0, 0, 0, 0, 1);\r\n    display: flex;\r\n}\r\n\r\n.navbar-brand {\r\n    margin-right: 80rem;\r\n    margin-left: 2rem;\r\n}\r\n\r\n.btn-warning {\r\n    color: white;\r\n    background-color: #5463FF;\r\n    border-color: #5463FF;\r\n}\r\n\r\n.col-3 {\r\n    text-decoration: none;\r\n}\r\n\r\n.clover {\r\n    color: white;\r\n    height: 200px;\r\n    background-color: #5463FF;\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/Taller2Servlets-1.0-SNAPSHOT/styles/styles.css b/target/Taller2Servlets-1.0-SNAPSHOT/styles/styles.css
+--- a/target/Taller2Servlets-1.0-SNAPSHOT/styles/styles.css	
++++ b/target/Taller2Servlets-1.0-SNAPSHOT/styles/styles.css	
+@@ -1,48 +1,41 @@
+-body {
++body{
+     margin: 0px;
+     font-family: 'Comfortaa', cursive;
+ }
+ 
+ .cover {
+     height: 400px;
+-    background-image: url(https://images.unsplash.com/photo-1507090960745-b32f65d3113a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80);
++    background-image:url(https://images.unsplash.com/photo-1507090960745-b32f65d3113a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80);
+     color: white;
+     background-size: cover;
+     background-position: center;
+-    background-color: rgba(0, 0, 0, 0, 1);
++    background-color: rgba(0, 0, 0, 0);
+     background-blend-mode: darken;
+ }
+-
+ .cover-small {
+     height: 200px;
+     background-blend-mode: normal;
+ }
+-
+ .nav-link {
+     color: white;
+ }
+-
+ .card {
+-    border-color: cornflowerblue;
+-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0, 1), 0 4px 6px -1px rgba(0, 0, 0, 0, 1);
++    border-color:cornflowerblue ;
++    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0), 0 4px 6px -1px rgba(0, 0, 0, 0);
+     display: flex;
+ }
+-
+ .navbar-brand {
+     margin-right: 80rem;
+     margin-left: 2rem;
+ }
+-
+ .btn-warning {
+     color: white;
+     background-color: #5463FF;
+     border-color: #5463FF;
+ }
+-
+ .col-3 {
+     text-decoration: none;
+ }
+-
+ .clover {
+     color: white;
+     height: 200px;
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ArtifactsWorkspaceSettings\">\r\n    <artifacts-to-build>\r\n      <artifact name=\"Taller2Servlets:war exploded\" />\r\n    </artifacts-to-build>\r\n  </component>\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"38f4fa0b-b747-4ba4-863e-c06c633b4994\" name=\"Changes\" comment=\"\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"27Wtm1AbzuWLkLZPHblkJ0yfBQo\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\r\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\r\n    <property name=\"SHARE_PROJECT_CONFIGURATION_FILES\" value=\"true\" />\r\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\r\n    <property name=\"node.js.detected.package.eslint\" value=\"true\" />\r\n    <property name=\"node.js.detected.package.tslint\" value=\"true\" />\r\n    <property name=\"node.js.selected.package.eslint\" value=\"(autodetect)\" />\r\n    <property name=\"node.js.selected.package.tslint\" value=\"(autodetect)\" />\r\n    <property name=\"nodejs_package_manager_path\" value=\"npm\" />\r\n    <property name=\"settings.editor.selected.configurable\" value=\"org.jetbrains.plugins.github.ui.GithubSettingsConfigurable\" />\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"JBoss/WildFly 26.0.1.Final\" type=\"JBossConfiguration\" factoryName=\"Local\" APPLICATION_SERVER_NAME=\"JBoss/WildFly 26.0.1.Final\" ALTERNATIVE_JRE_ENABLED=\"false\">\r\n      <option name=\"OPEN_IN_BROWSER_URL\" value=\"http://localhost:8080/Taller2Servlets-1.0-SNAPSHOT\" />\r\n      <deployment>\r\n        <artifact name=\"Taller2Servlets:war exploded\">\r\n          <settings />\r\n        </artifact>\r\n      </deployment>\r\n      <server-settings>\r\n        <option name=\"SERVER\" value=\"\" />\r\n        <option name=\"BINDING_SET_NAME\" value=\"\" />\r\n        <option name=\"DOMAIN\" value=\"false\" />\r\n        <option name=\"SERVER_GROUP\" value=\"\" />\r\n        <option name=\"USERNAME\" value=\"\" />\r\n        <option name=\"CREDENTIAL_ALIAS\" />\r\n      </server-settings>\r\n      <predefined_log_file enabled=\"true\" id=\"JBoss\" />\r\n      <ConfigurationWrapper VM_VAR=\"JAVA_OPTS\" RunnerId=\"Run\">\r\n        <option name=\"USE_ENV_VARIABLES\" value=\"true\" />\r\n        <STARTUP>\r\n          <option name=\"USE_DEFAULT\" value=\"true\" />\r\n          <option name=\"SCRIPT\" value=\"\" />\r\n          <option name=\"VM_PARAMETERS\" value=\"\" />\r\n          <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\r\n        </STARTUP>\r\n        <SHUTDOWN>\r\n          <option name=\"USE_DEFAULT\" value=\"true\" />\r\n          <option name=\"SCRIPT\" value=\"\" />\r\n          <option name=\"VM_PARAMETERS\" value=\"\" />\r\n          <option name=\"PROGRAM_PARAMETERS\" value=\"\" />\r\n        </SHUTDOWN>\r\n      </ConfigurationWrapper>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n        <option name=\"BuildArtifacts\" enabled=\"true\">\r\n          <artifact name=\"Taller2Servlets:war exploded\" />\r\n        </option>\r\n      </method>\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"38f4fa0b-b747-4ba4-863e-c06c633b4994\" name=\"Changes\" comment=\"\" />\r\n      <created>1649447826712</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1649447826712</updated>\r\n      <workItem from=\"1649447828680\" duration=\"4171000\" />\r\n      <workItem from=\"1649547254572\" duration=\"212000\" />\r\n      <workItem from=\"1649547493167\" duration=\"880000\" />\r\n      <workItem from=\"1649548404357\" duration=\"1007000\" />\r\n      <workItem from=\"1649549451002\" duration=\"308000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -9,11 +9,50 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="38f4fa0b-b747-4ba4-863e-c06c633b4994" name="Changes" comment="" />
++    <list default="true" id="38f4fa0b-b747-4ba4-863e-c06c633b4994" name="Changes" comment="">
++      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/webContexts.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webContexts.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unbosque/tiendadeartevale/DTOS/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unbosque/tiendadeartevale/DTOS/User.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unbosque/tiendadeartevale/LogInServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unbosque/tiendadeartevale/LogInServlet.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unbosque/tiendadeartevale/NFTServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unbosque/tiendadeartevale/NFTServlet.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unbosque/tiendadeartevale/SignUpServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unbosque/tiendadeartevale/SignUpServlet.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/co/edu/unbosque/tiendadeartevale/UserService/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/co/edu/unbosque/tiendadeartevale/UserService/UserService.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/resources/users.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/users.csv" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/webapp/crearPiezas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/crearPiezas.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/webapp/recargar.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/recargar.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/webapp/registro.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/registro.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/Colecciones.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/Colecciones.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/co/edu/unbosque/tiendadeartevale/DTOS/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/co/edu/unbosque/tiendadeartevale/DTOS/User.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/co/edu/unbosque/tiendadeartevale/UserService/LogInServlet.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/co/edu/unbosque/tiendadeartevale/UserService/SingUpServlet.class" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/co/edu/unbosque/tiendadeartevale/UserService/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/co/edu/unbosque/tiendadeartevale/UserService/UserService.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/users.csv" beforeDir="false" afterPath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/WEB-INF/classes/users.csv" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/colecciones_U.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/colecciones_U.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/crearPiezas.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/crearPiezas.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/index.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/recargar.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/recargar.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/registro.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/registro.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/styles/estilo_u.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/styles/estilo_u.css" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/styles/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/Taller2Servlets-1.0-SNAPSHOT/styles/styles.css" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/DTOS/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/DTOS/User.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/SignUpServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/SignUpServlet.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/UserService/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/co/edu/unbosque/tiendadeartevale/UserService/UserService.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/users.csv" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/users.csv" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
++  </component>
++  <component name="FileTemplateManagerImpl">
++    <option name="RECENT_TEMPLATES">
++      <list>
++        <option value="Class" />
++      </list>
++    </option>
+   </component>
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+@@ -31,11 +70,15 @@
+     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+     <property name="WebServerToolWindowFactoryState" value="false" />
++    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/TiendaDeArteVale" />
+     <property name="node.js.detected.package.eslint" value="true" />
+     <property name="node.js.detected.package.tslint" value="true" />
+     <property name="node.js.selected.package.eslint" value="(autodetect)" />
+     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+     <property name="nodejs_package_manager_path" value="npm" />
++    <property name="project.structure.last.edited" value="Modules" />
++    <property name="project.structure.proportion" value="0.0" />
++    <property name="project.structure.side.proportion" value="0.0" />
+     <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
+   </component>
+   <component name="RunManager">
+@@ -91,6 +134,8 @@
+       <workItem from="1649547493167" duration="880000" />
+       <workItem from="1649548404357" duration="1007000" />
+       <workItem from="1649549451002" duration="308000" />
++      <workItem from="1649551346861" duration="2735000" />
++      <workItem from="1649625383049" duration="12541000" />
+     </task>
+     <servers />
+   </component>
+Index: target/Taller2Servlets-1.0-SNAPSHOT/registro.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"es\">\r\n<!-- Este es el encabezado el que contiene el menu -->\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <title>Registro</title>\r\n    <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\"\r\n          integrity=\"sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3\" crossorigin=\"anonymous\">\r\n\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=styles/estiloR.css>\r\n</head>\r\n\r\n<body>\r\n<!-- Este es el encabezado el que contiene el menu -->\r\n<header>\r\n    <nav class=\"navbar navbar-expand-lg navbar-light\" style=\"background-color:#5463FF\">\r\n        <a class=\"navbar-brand\" href=\"index.html\">\r\n            <img src=\"assets/V_(logo_2010).svg.png\" alt=\"\" width=\"70\" height=\"60\">\r\n        </a>\r\n        <ul class=\"nav\">\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link active\" aria-current=\"page\" href=\"Ingresar.html\">Iniciar sesion</a>\r\n            </li>\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link\" href=\"registro.html\">Registrese</a>\r\n            </li>\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link\" href=\"Colecciones.html\">colecciones</a>\r\n            </li>\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link\" href=\"#\">Acerca de</a>\r\n            </li>\r\n        </ul>\r\n    </nav>\r\n</header>\r\n<!-- Este es el formulario que tiene que hacer el ususario para registrarse -->\r\n\r\n\r\n<h1 class=\"titulo\">Registrarse</h1>\r\n<form class=\"form\" action=\"./signup\" method=\"post\">\r\n    <input class=\"cajas\" type=\"text\" placeholder=\"Name\" required maxlength=\"30\">\r\n    <input name=\"username\" class=\"cajas\" type=\"text\" placeholder=\"UserName\" required maxlength=\"30\">\r\n    <input class=\"cajas\" type=\"email\" placeholder=\"Email\" required maxlength=\"30\">\r\n    <input name=\"password\" class=\"cajas\" type=\"password\" placeholder=\"Password\" required maxlength=\"30\">\r\n\r\n    <p class=\"termino1\"><input type=\"checkbox\"> Cuenta Usuario </p>\r\n    <p class=\"termino1\"><input type=\"checkbox\"> Cuenta Artista </p>\r\n\r\n    <input type=\"submit\" class=\"btn\" value=\"REGISTRAR\">\r\n\r\n\r\n    <p class=\"tengo-cuenta\"><a href=\"Ingresar.html\" class=\"tengo-cuenta\">Ya tengo cuenta</a></p>\r\n\r\n</form>\r\n\r\n\r\n</body>\r\n\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/Taller2Servlets-1.0-SNAPSHOT/registro.html b/target/Taller2Servlets-1.0-SNAPSHOT/registro.html
+--- a/target/Taller2Servlets-1.0-SNAPSHOT/registro.html	
++++ b/target/Taller2Servlets-1.0-SNAPSHOT/registro.html	
+@@ -26,7 +26,7 @@
+                 <a class="nav-link" href="registro.html">Registrese</a>
+             </li>
+             <li class="nav-item">
+-                <a class="nav-link" href="Colecciones.html">colecciones</a>
++                <a class="nav-link" href="Colecciones.html">Colecciones</a>
+             </li>
+             <li class="nav-item">
+                 <a class="nav-link" href="#">Acerca de</a>
+@@ -44,8 +44,10 @@
+     <input class="cajas" type="email" placeholder="Email" required maxlength="30">
+     <input name="password" class="cajas" type="password" placeholder="Password" required maxlength="30">
+ 
+-    <p class="termino1"><input type="checkbox"> Cuenta Usuario </p>
+-    <p class="termino1"><input type="checkbox"> Cuenta Artista </p>
++    <select name="Rol" id="rol">
++        <option value="comprador">Comprador</option>
++        <option value="artista">Artista</option>
++    </select>
+ 
+     <input type="submit" class="btn" value="REGISTRAR">
+ 
+Index: target/Taller2Servlets-1.0-SNAPSHOT/index.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"es\">\r\n<!-- informacion de la pagina, fuentes y bootstrap -->\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <title>Vale!</title>\r\n    <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\"\r\n          integrity=\"sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3\" crossorigin=\"anonymous\">\r\n    <link rel=\"stylesheet\" href=\"styles/styles.css\"/>\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap\" rel=\"stylesheet\">\r\n\r\n</head>\r\n\r\n<body>\r\n<!-- Este es el encabezado que contiene el menu -->\r\n<header>\r\n    <nav class=\"navbar navbar-expand-lg navbar-light\" style=\"background-color:#5463FF\">\r\n        <a class=\"navbar-brand\" href=\"index.html\">\r\n            <img src=\"assets/V_(logo_2010).svg.png\" alt=\"\" width=\"70\" height=\"60\">\r\n        </a>\r\n        <ul class=\"nav\">\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link active\" aria-current=\"page\" href=\"Ingresar.html\">Iniciar sesion</a>\r\n            </li>\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link\" href=\"registro.html\">Registrese</a>\r\n            </li>\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link\" href=\"Colecciones.html\">colecciones</a>\r\n            </li>\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link\" href=\"#\">Acerca de</a>\r\n            </li>\r\n        </ul>\r\n    </nav>\r\n    <div class=\"cover d-flex  justify-content-center align-items-center flex-column\">\r\n        <h1>\r\n            VALE!\r\n        </h1>\r\n        <p>\r\n            La mejor pagina de arte del pais\r\n        </p>\r\n        <button class=\"btn btn-warning\">\r\n            Conoce mas\r\n        </button>\r\n    </div>\r\n</header>\r\n<!-- Toda esta seccion pertenece a los NFTs -->\r\n<section>\r\n    <div class=\"container mt-5 mb-5  \" id=\"colecciones\">\r\n\r\n        <div class=\"row justify-content-center\">\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/ZqSBa7z6umZTcSxAW_ux840NmefFD2r4HU-S7TdN4EnkFFVCS3aLbt-4MV9lIeI57pgJj1Tt6UI31ggeqp26RWwXk7HEDhicTv985g=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #1284</h5>\r\n                        <p class=\"card-text\">0.39 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/8rx6Odhi2tma8qhoeL7E2NBSjCaniZPyg0JBpnRm1-rik_zxD8veBG_p5sXXUYpRG4BU6-WyTGzExXbc29uTXM8RggCVp2bXT8oGLw=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #1289 </h5>\r\n                        <p class=\"card-text\">0.57 &#x1F48E </p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/N8__4Z-lsQEnTd8JO_P-3pPB-7i_C41czbw1doZnl4sIIpilh4yv74587R9HkpmRlERdIeX6lb4tJpG3eHuHkiOuyh1Or-ya8n9z=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #1659 </h5>\r\n                        <p class=\"card-text\">0.31 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/kiMK5F6sjf8Dgza5mDXIIIkuabjchdhPqtNrlcCQSb0OpiRTJS8vzcMWKN5-YuizBFdLWhjoq6aqZTkAT49UkFMTqvi7gTE_6bi4tFQ=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #5326 </h5>\r\n                        <p class=\"card-text\">0.87 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/CtikgQ3yF5BwGgxdDiXWcUULrKtR88IEKSHb2U3vkVSSskaO63g-6NdzYMmzz-YoydgAlF_CNHJ4gyH6PG573UH6VImp2knyfTSR=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #4264 </h5>\r\n                        <p class=\"card-text\">0.16 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/QLFWtwpnc01fcTFM4Motbp296kM9Viv3IXmcfkoMlEL5IzMANfnRDB0z8W4eBdPIlYmjLnV9wwA8__zvbkkfMwIQWxegeZdQq_a6Sg=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #8954 </h5>\r\n                        <p class=\"card-text\">0.36 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/HLLghMW8zk3QyJWqWowpfJf2D7gK6rhq_E039gzuPALEFNd_CFuiUuPEJrNmeaSCsf6OTwkhRPhOgBHthlswI2OUr-ME6HdQj3Xv7A=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #7452 </h5>\r\n                        <p class=\"card-text\">0.78 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/_wS9uIxieBvkPoEAmNsppTQwFDHhshs7BAFHuis-FkPwOqsW5-4MHcE0BhlpSG8Dkjy97uH9_rnsGOL-d3tOkZbBIFQHS2UVCzfaNg=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #3085 </h5>\r\n                        <p class=\"card-text\">0.72 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/JJIcaWJZj7ltpiDpterflDxzhRr2l-X-p--zlUbUM8kh23DS_XY4K7QVtPhu-Ntan1PW0iaDCMKxIIDH1lhbXZWyfLDaRf7L-jyfX_4=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #8035 </h5>\r\n                        <p class=\"card-text\">0.27 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/uesgLNkXBqdiQ33H1MS4c9rI7dZfhSNM4WZN0vMO2beNLTFTOWShpd4DZzZdwvpuZDafN6uxBuIBj1F5ubzeB-Wuoe5d-we0PaaCQg=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #3985 </h5>\r\n                        <p class=\"card-text\">0.24 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/-yuxbYKN1D0xyP8StLL14yLmR9mIe0_TeE_bw2ltS8au2Rao_DxxdGAwpxowr3onnZVbWsx8G2hFiNMXzkJflSpMLR2tiJ6wrXo4=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #5685 </h5>\r\n                        <p class=\"card-text\">0.56 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/AxzkT8hv3nnF5KROxMmQT9Wy-bs7bVVdMb8hQDlBZYceTksFqEtSK9nsOeYOCTNVyUyTu0hqffhX0HJPY5_A17oilETuo4632Rhbmv8=w286) ;\"></div>\r\n                    <a href=\"Colecciones.html\"></a>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #7085 </h5>\r\n                        <p class=\"card-text\">0.98 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n\r\n        </div>\r\n\r\n    </div>\r\n</section>\r\n<!-- Este pie de pagina muestra la infromacion donde se pueden remitir -->\r\n<footer>\r\n    <div class=\"clover d-flex justify-content-center align-items-center flex-column\">\r\n        <h6>\r\n            CONTÁCTENOS\r\n        </h6>\r\n        <p>\r\n            3008952086-3017287445\r\n        </p>\r\n        <img src=\"/assets/V_(logo_2010).svg.png\" alt=\"\" width=\"70\" height=\"60\">\r\n\r\n</footer>\r\n\r\n\r\n</body>\r\n\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/Taller2Servlets-1.0-SNAPSHOT/index.html b/target/Taller2Servlets-1.0-SNAPSHOT/index.html
+--- a/target/Taller2Servlets-1.0-SNAPSHOT/index.html	
++++ b/target/Taller2Servlets-1.0-SNAPSHOT/index.html	
+@@ -6,7 +6,7 @@
+     <title>Vale!</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+-    <link rel="stylesheet" href="styles/styles.css"/>
++    <link rel="stylesheet" href=styles/styles.css/>
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+@@ -25,10 +25,10 @@
+                 <a class="nav-link active" aria-current="page" href="Ingresar.html">Iniciar sesion</a>
+             </li>
+             <li class="nav-item">
+-                <a class="nav-link" href="registro.html">Registrese</a>
++                <a class="nav-link" href="registro.html">Regístrese</a>
+             </li>
+             <li class="nav-item">
+-                <a class="nav-link" href="Colecciones.html">colecciones</a>
++                <a class="nav-link" href="Colecciones.html">Colecciones</a>
+             </li>
+             <li class="nav-item">
+                 <a class="nav-link" href="#">Acerca de</a>
+@@ -40,10 +40,10 @@
+             VALE!
+         </h1>
+         <p>
+-            La mejor pagina de arte del pais
++            La mejor página de arte del país
+         </p>
+         <button class="btn btn-warning">
+-            Conoce mas
++            Conoce más
+         </button>
+     </div>
+ </header>
+@@ -224,7 +224,7 @@
+             3008952086-3017287445
+         </p>
+         <img src="/assets/V_(logo_2010).svg.png" alt="" width="70" height="60">
+-
++    </div>
+ </footer>
+ 
+ 
+Index: target/Taller2Servlets-1.0-SNAPSHOT/recargar.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"es\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Document</title>\r\n    <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\"\r\n          integrity=\"sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3\" crossorigin=\"anonymous\">\r\n    <link rel=\"stylesheet\" href=\"estilo_r.css\">\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap\" rel=\"stylesheet\">\r\n</head>\r\n<body>\r\n<header>\r\n    <nav class=\"navbar navbar-expand-lg navbar-light\" style=\"background-color:#5463FF\">\r\n        <a class=\"navbar-brand\" href=\"index.html\">\r\n            <img src=\"assets/V_(logo_2010).svg.png\" alt=\"\" width=\"70\" height=\"60\">\r\n        </a>\r\n        <ul class=\"nav\">\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link active\" aria-current=\"page\" href=\"index.html\">inicio</a>\r\n            </li>\r\n\r\n        </ul>\r\n    </nav>\r\n</header>\r\n<div>\r\n    <div class=\"login-page\">\r\n        <div class=\"form\">\r\n            <form class=\"login-form\"><p>Saldo:</p>\r\n                <input type=\"\" placeholder=\"Valor a ingresar\"/>\r\n                <button>Recargar</button>\r\n            </form>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n</body>\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/Taller2Servlets-1.0-SNAPSHOT/recargar.html b/target/Taller2Servlets-1.0-SNAPSHOT/recargar.html
+--- a/target/Taller2Servlets-1.0-SNAPSHOT/recargar.html	
++++ b/target/Taller2Servlets-1.0-SNAPSHOT/recargar.html	
+@@ -7,7 +7,7 @@
+     <title>Document</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+-    <link rel="stylesheet" href="estilo_r.css">
++    <link rel="stylesheet" href=/styles/estilo_r.css>
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+@@ -16,7 +16,7 @@
+ <header>
+     <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#5463FF">
+         <a class="navbar-brand" href="index.html">
+-            <img src="assets/V_(logo_2010).svg.png" alt="" width="70" height="60">
++            <img src=assets/V_(logo_2010).svg.png alt="" width="70" height="60">
+         </a>
+         <ul class="nav">
+             <li class="nav-item">
+Index: target/Taller2Servlets-1.0-SNAPSHOT/colecciones_U.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"es\">\r\n\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Document</title>\r\n    <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\"\r\n          integrity=\"sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3\" crossorigin=\"anonymous\">\r\n    <link rel=\"stylesheet\" href=\"estilo_u.css\">\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap\" rel=\"stylesheet\">\r\n</head>\r\n\r\n<body>\r\n<header>\r\n    <nav class=\"navbar navbar-expand-lg navbar-light\" style=\"background-color:#5463FF\">\r\n        <a class=\"navbar-brand\" href=\"index.html\">\r\n            <img src=\"assets/V_(logo_2010).svg.png\" alt=\"\" width=\"70\" height=\"60\">\r\n        </a>\r\n        <ul class=\"nav\">\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link active\" aria-current=\"page\" href=\"recargar.html\">recargar</a>\r\n            </li>\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link\" aria-current=\"page\" href=\"index.html\">inicio</a>\r\n            </li>\r\n        </ul>\r\n    </nav>\r\n</header>\r\n<div>\r\n    <table>\r\n        <tr>\r\n            <td><a href=\"#\"><img src=\"assets/avatar1.png\" width=\"300\" height=\"300\"></a></td>\r\n            <h1>Coleccion NFTs 2.0</h1>\r\n            <td>Usuario: juan_carlos02<br><br>Saldo: 0.0 &#8383<br><br><a href=\"formulario1.html\"\r\n                                                                          class=\"btn btn-primary\">Crear pieza</a></td>\r\n        </tr>\r\n    </table>\r\n\r\n</div>\r\n<section>\r\n    <div class=\"container mt-5 mb-5  \" id=\"colecciones\">\r\n\r\n        <div class=\"row justify-content-center\">\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\"><a href=\"\"></a>\r\n                    <div class=\"cover cover-small\"\r\n\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/ZqSBa7z6umZTcSxAW_ux840NmefFD2r4HU-S7TdN4EnkFFVCS3aLbt-4MV9lIeI57pgJj1Tt6UI31ggeqp26RWwXk7HEDhicTv985g=w286) ;\">\r\n                    </div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #1284</h5>\r\n                        <p class=\"card-text\">Autor: Rodolfo</p>\r\n                        <p class=\"card-text\">0.39 &#x1F48E</p>\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/8rx6Odhi2tma8qhoeL7E2NBSjCaniZPyg0JBpnRm1-rik_zxD8veBG_p5sXXUYpRG4BU6-WyTGzExXbc29uTXM8RggCVp2bXT8oGLw=w286) ;\">\r\n                    </div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #1289 </h5>\r\n                        <p class=\"card-text\">Autor: Valeria</p>\r\n                        <p class=\"card-text\">0.57 &#x1F48E </p>\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/N8__4Z-lsQEnTd8JO_P-3pPB-7i_C41czbw1doZnl4sIIpilh4yv74587R9HkpmRlERdIeX6lb4tJpG3eHuHkiOuyh1Or-ya8n9z=w286) ;\">\r\n                    </div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #1659 </h5>\r\n                        <p class=\"card-text\">Autor: David</p>\r\n                        <p class=\"card-text\">0.31 &#x1F48E</p>\r\n\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/kiMK5F6sjf8Dgza5mDXIIIkuabjchdhPqtNrlcCQSb0OpiRTJS8vzcMWKN5-YuizBFdLWhjoq6aqZTkAT49UkFMTqvi7gTE_6bi4tFQ=w286) ;\">\r\n                    </div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #5326 </h5>\r\n                        <p class=\"card-text\">Autor: Andrea</p>\r\n                        <p class=\"card-text\">0.87 &#x1F48E</p>\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/CtikgQ3yF5BwGgxdDiXWcUULrKtR88IEKSHb2U3vkVSSskaO63g-6NdzYMmzz-YoydgAlF_CNHJ4gyH6PG573UH6VImp2knyfTSR=w286) ;\">\r\n                    </div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #4264 </h5>\r\n                        <p class=\"card-text\">Autor: Luis</p>\r\n                        <p class=\"card-text\">0.16 &#x1F48E</p>\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/QLFWtwpnc01fcTFM4Motbp296kM9Viv3IXmcfkoMlEL5IzMANfnRDB0z8W4eBdPIlYmjLnV9wwA8__zvbkkfMwIQWxegeZdQq_a6Sg=w286) ;\">\r\n                    </div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #8954 </h5>\r\n                        <p class=\"card-text\">Autor: Gerardo</p>\r\n                        <p class=\"card-text\">0.36 &#x1F48E</p>\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/HLLghMW8zk3QyJWqWowpfJf2D7gK6rhq_E039gzuPALEFNd_CFuiUuPEJrNmeaSCsf6OTwkhRPhOgBHthlswI2OUr-ME6HdQj3Xv7A=w286) ;\">\r\n                    </div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #7452 </h5>\r\n                        <p class=\"card-text\">Autor: Santiago</p>\r\n                        <p class=\"card-text\">0.78 &#x1F48E</p>\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/_wS9uIxieBvkPoEAmNsppTQwFDHhshs7BAFHuis-FkPwOqsW5-4MHcE0BhlpSG8Dkjy97uH9_rnsGOL-d3tOkZbBIFQHS2UVCzfaNg=w286) ;\">\r\n                    </div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #3085 </h5>\r\n                        <p class=\"card-text\">Autor: Luisa</p>\r\n                        <p class=\"card-text\">0.72 &#x1F48E</p>\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/JJIcaWJZj7ltpiDpterflDxzhRr2l-X-p--zlUbUM8kh23DS_XY4K7QVtPhu-Ntan1PW0iaDCMKxIIDH1lhbXZWyfLDaRf7L-jyfX_4=w286) ;\">\r\n                    </div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #8035 </h5>\r\n                        <p class=\"card-text\">Autor: Jose</p>\r\n                        <p class=\"card-text\">0.27 &#x1F48E</p>\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/uesgLNkXBqdiQ33H1MS4c9rI7dZfhSNM4WZN0vMO2beNLTFTOWShpd4DZzZdwvpuZDafN6uxBuIBj1F5ubzeB-Wuoe5d-we0PaaCQg=w286) ;\">\r\n                    </div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #3985 </h5>\r\n                        <p class=\"card-text\">Autor: Tomas</p>\r\n                        <p class=\"card-text\">0.24 &#x1F48E</p>\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/-yuxbYKN1D0xyP8StLL14yLmR9mIe0_TeE_bw2ltS8au2Rao_DxxdGAwpxowr3onnZVbWsx8G2hFiNMXzkJflSpMLR2tiJ6wrXo4=w286) ;\">\r\n                    </div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #5685 </h5>\r\n                        <p class=\"card-text\">Autor: Harold</p>\r\n                        <p class=\"card-text\">0.56 &#x1F48E</p>\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/AxzkT8hv3nnF5KROxMmQT9Wy-bs7bVVdMb8hQDlBZYceTksFqEtSK9nsOeYOCTNVyUyTu0hqffhX0HJPY5_A17oilETuo4632Rhbmv8=w286) ;\">\r\n                    </div>\r\n                    <a href=\"Colecciones.html\"></a>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #7085 </h5>\r\n                        <p class=\"card-text\">Autor: Nicolas</p>\r\n                        <p class=\"card-text\">0.98 &#x1F48E</p>\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"formulario1.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n\r\n        </div>\r\n\r\n    </div>\r\n</section>\r\n</body>\r\n\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/Taller2Servlets-1.0-SNAPSHOT/colecciones_U.html b/target/Taller2Servlets-1.0-SNAPSHOT/colecciones_U.html
+--- a/target/Taller2Servlets-1.0-SNAPSHOT/colecciones_U.html	
++++ b/target/Taller2Servlets-1.0-SNAPSHOT/colecciones_U.html	
+@@ -2,236 +2,225 @@
+ <html lang="es">
+ 
+ <head>
+-    <meta charset="UTF-8">
+-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-    <title>Document</title>
+-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+-    <link rel="stylesheet" href="estilo_u.css">
+-    <link rel="preconnect" href="https://fonts.googleapis.com">
+-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
++  <meta charset="UTF-8">
++  <meta http-equiv="X-UA-Compatible" content="IE=edge">
++  <meta name="viewport" content="width=device-width, initial-scale=1.0">
++  <title>Usuario Artista</title>
++  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
++        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
++  <link rel="stylesheet" href=./estilo_u.css>
++  <link rel="preconnect" href="https://fonts.googleapis.com">
++  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
++  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+ </head>
+ 
+ <body>
+ <header>
+-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#5463FF">
+-        <a class="navbar-brand" href="index.html">
+-            <img src="assets/V_(logo_2010).svg.png" alt="" width="70" height="60">
+-        </a>
+-        <ul class="nav">
+-            <li class="nav-item">
+-                <a class="nav-link active" aria-current="page" href="recargar.html">recargar</a>
+-            </li>
+-            <li class="nav-item">
+-                <a class="nav-link" aria-current="page" href="index.html">inicio</a>
+-            </li>
+-        </ul>
+-    </nav>
++  <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#5463FF">
++    <a class="navbar-brand" href="index.html">
++      <img src="assets/V_(logo_2010).svg.png" alt="" width="70" height="60">
++    </a>
++    <ul class="nav">
++      <li class="nav-item">
++        <a class="nav-link active" aria-current="page" href="recargar.html">Recargar</a>
++      </li>
++      <li class="nav-item">
++        <a class="nav-link" aria-current="page" href="index.html">Inicio</a>
++      </li>
++    </ul>
++  </nav>
+ </header>
+ <div>
+-    <table>
+-        <tr>
+-            <td><a href="#"><img src="assets/avatar1.png" width="300" height="300"></a></td>
+-            <h1>Coleccion NFTs 2.0</h1>
+-            <td>Usuario: juan_carlos02<br><br>Saldo: 0.0 &#8383<br><br><a href="formulario1.html"
+-                                                                          class="btn btn-primary">Crear pieza</a></td>
+-        </tr>
+-    </table>
++  <table>
++    <tr>
++      <td><a href="#"><img src="assets/avatar1.png" width="300" height="300"></a></td>
++      <h1>Usuario Artista</h1>
++      <td>Usuario: juan_carlos02<br><br>Saldo: 0.0 &#8383<br><br><a href="crearPiezas.html" class="btn btn-primary">Crear pieza</a></td>
++    </tr>
++  </table>
+ 
+ </div>
+ <section>
+-    <div class="container mt-5 mb-5  " id="colecciones">
++  <div class="container mt-5 mb-5  " id="colecciones">
+ 
+-        <div class="row justify-content-center">
+-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
+-                <div class="card"><a href=""></a>
+-                    <div class="cover cover-small"
++    <div class="row justify-content-center">
++      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
++        <div class="card"><a href=""></a>
++          <div class="cover cover-small"
+ 
+-                         style="background-image:url(https://lh3.googleusercontent.com/ZqSBa7z6umZTcSxAW_ux840NmefFD2r4HU-S7TdN4EnkFFVCS3aLbt-4MV9lIeI57pgJj1Tt6UI31ggeqp26RWwXk7HEDhicTv985g=w286) ;">
+-                    </div>
+-                    <div class="card-body">
+-                        <h5 class="card-title">RudeKidz #1284</h5>
+-                        <p class="card-text">Autor: Rodolfo</p>
+-                        <p class="card-text">0.39 &#x1F48E</p>
+-                        <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
+-                        <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
+-                    </div>
+-                </div>
+-            </div>
++               style="background-image:url(https://lh3.googleusercontent.com/ZqSBa7z6umZTcSxAW_ux840NmefFD2r4HU-S7TdN4EnkFFVCS3aLbt-4MV9lIeI57pgJj1Tt6UI31ggeqp26RWwXk7HEDhicTv985g=w286) ;">
++          </div>
++          <div class="card-body">
++            <h5 class="card-title">RudeKidz #1284</h5>
++            <p class="card-text">Autor: Rodolfo</p><p class="card-text">0.39 &#x1F48E</p>
++            <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
++            <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
++          </div>
++        </div>
++      </div>
+ 
+-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
+-                <div class="card">
+-                    <div class="cover cover-small"
+-                         style="background-image:url(https://lh3.googleusercontent.com/8rx6Odhi2tma8qhoeL7E2NBSjCaniZPyg0JBpnRm1-rik_zxD8veBG_p5sXXUYpRG4BU6-WyTGzExXbc29uTXM8RggCVp2bXT8oGLw=w286) ;">
+-                    </div>
+-                    <div class="card-body">
+-                        <h5 class="card-title">RudeKidz #1289 </h5>
+-                        <p class="card-text">Autor: Valeria</p>
+-                        <p class="card-text">0.57 &#x1F48E </p>
+-                        <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
+-                        <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
+-                    </div>
+-                </div>
+-            </div>
++      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
++        <div class="card">
++          <div class="cover cover-small"
++               style="background-image:url(https://lh3.googleusercontent.com/8rx6Odhi2tma8qhoeL7E2NBSjCaniZPyg0JBpnRm1-rik_zxD8veBG_p5sXXUYpRG4BU6-WyTGzExXbc29uTXM8RggCVp2bXT8oGLw=w286) ;">
++          </div>
++          <div class="card-body">
++            <h5 class="card-title">RudeKidz #1289 </h5>
++            <p class="card-text">Autor: Valeria</p><p class="card-text">0.57 &#x1F48E </p>
++            <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
++            <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
++          </div>
++        </div>
++      </div>
+ 
+-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
+-                <div class="card">
+-                    <div class="cover cover-small"
+-                         style="background-image:url(https://lh3.googleusercontent.com/N8__4Z-lsQEnTd8JO_P-3pPB-7i_C41czbw1doZnl4sIIpilh4yv74587R9HkpmRlERdIeX6lb4tJpG3eHuHkiOuyh1Or-ya8n9z=w286) ;">
+-                    </div>
+-                    <div class="card-body">
+-                        <h5 class="card-title">RudeKidz #1659 </h5>
+-                        <p class="card-text">Autor: David</p>
+-                        <p class="card-text">0.31 &#x1F48E</p>
++      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
++        <div class="card">
++          <div class="cover cover-small"
++               style="background-image:url(https://lh3.googleusercontent.com/N8__4Z-lsQEnTd8JO_P-3pPB-7i_C41czbw1doZnl4sIIpilh4yv74587R9HkpmRlERdIeX6lb4tJpG3eHuHkiOuyh1Or-ya8n9z=w286) ;">
++          </div>
++          <div class="card-body">
++            <h5 class="card-title">RudeKidz #1659 </h5>
++            <p class="card-text">Autor: David</p><p class="card-text">0.31 &#x1F48E</p>
+ 
+-                        <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
+-                        <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
+-                    </div>
+-                </div>
+-            </div>
++            <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
++            <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
++          </div>
++        </div>
++      </div>
+ 
+-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
+-                <div class="card">
+-                    <div class="cover cover-small"
+-                         style="background-image:url(https://lh3.googleusercontent.com/kiMK5F6sjf8Dgza5mDXIIIkuabjchdhPqtNrlcCQSb0OpiRTJS8vzcMWKN5-YuizBFdLWhjoq6aqZTkAT49UkFMTqvi7gTE_6bi4tFQ=w286) ;">
+-                    </div>
+-                    <div class="card-body">
+-                        <h5 class="card-title">RudeKidz #5326 </h5>
+-                        <p class="card-text">Autor: Andrea</p>
+-                        <p class="card-text">0.87 &#x1F48E</p>
+-                        <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
+-                        <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
+-                    </div>
+-                </div>
+-            </div>
++      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
++        <div class="card">
++          <div class="cover cover-small"
++               style="background-image:url(https://lh3.googleusercontent.com/kiMK5F6sjf8Dgza5mDXIIIkuabjchdhPqtNrlcCQSb0OpiRTJS8vzcMWKN5-YuizBFdLWhjoq6aqZTkAT49UkFMTqvi7gTE_6bi4tFQ=w286) ;">
++          </div>
++          <div class="card-body">
++            <h5 class="card-title">RudeKidz #5326 </h5>
++            <p class="card-text">Autor: Andrea</p><p class="card-text">0.87 &#x1F48E</p>
++            <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
++            <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
++          </div>
++        </div>
++      </div>
+ 
+-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
+-                <div class="card">
+-                    <div class="cover cover-small"
+-                         style="background-image:url(https://lh3.googleusercontent.com/CtikgQ3yF5BwGgxdDiXWcUULrKtR88IEKSHb2U3vkVSSskaO63g-6NdzYMmzz-YoydgAlF_CNHJ4gyH6PG573UH6VImp2knyfTSR=w286) ;">
+-                    </div>
+-                    <div class="card-body">
+-                        <h5 class="card-title">RudeKidz #4264 </h5>
+-                        <p class="card-text">Autor: Luis</p>
+-                        <p class="card-text">0.16 &#x1F48E</p>
+-                        <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
+-                        <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
+-                    </div>
+-                </div>
+-            </div>
++      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
++        <div class="card">
++          <div class="cover cover-small"
++               style="background-image:url(https://lh3.googleusercontent.com/CtikgQ3yF5BwGgxdDiXWcUULrKtR88IEKSHb2U3vkVSSskaO63g-6NdzYMmzz-YoydgAlF_CNHJ4gyH6PG573UH6VImp2knyfTSR=w286) ;">
++          </div>
++          <div class="card-body">
++            <h5 class="card-title">RudeKidz #4264 </h5>
++            <p class="card-text">Autor: Luis</p><p class="card-text">0.16 &#x1F48E</p>
++            <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
++            <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
++          </div>
++        </div>
++      </div>
+ 
+-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
+-                <div class="card">
+-                    <div class="cover cover-small"
+-                         style="background-image:url(https://lh3.googleusercontent.com/QLFWtwpnc01fcTFM4Motbp296kM9Viv3IXmcfkoMlEL5IzMANfnRDB0z8W4eBdPIlYmjLnV9wwA8__zvbkkfMwIQWxegeZdQq_a6Sg=w286) ;">
+-                    </div>
+-                    <div class="card-body">
+-                        <h5 class="card-title">RudeKidz #8954 </h5>
+-                        <p class="card-text">Autor: Gerardo</p>
+-                        <p class="card-text">0.36 &#x1F48E</p>
+-                        <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
+-                        <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
+-                    </div>
+-                </div>
+-            </div>
++      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
++        <div class="card">
++          <div class="cover cover-small"
++               style="background-image:url(https://lh3.googleusercontent.com/QLFWtwpnc01fcTFM4Motbp296kM9Viv3IXmcfkoMlEL5IzMANfnRDB0z8W4eBdPIlYmjLnV9wwA8__zvbkkfMwIQWxegeZdQq_a6Sg=w286) ;">
++          </div>
++          <div class="card-body">
++            <h5 class="card-title">RudeKidz #8954 </h5>
++            <p class="card-text">Autor: Gerardo</p><p class="card-text">0.36 &#x1F48E</p>
++            <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
++            <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
++          </div>
++        </div>
++      </div>
+ 
+-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
+-                <div class="card">
+-                    <div class="cover cover-small"
+-                         style="background-image:url(https://lh3.googleusercontent.com/HLLghMW8zk3QyJWqWowpfJf2D7gK6rhq_E039gzuPALEFNd_CFuiUuPEJrNmeaSCsf6OTwkhRPhOgBHthlswI2OUr-ME6HdQj3Xv7A=w286) ;">
+-                    </div>
+-                    <div class="card-body">
+-                        <h5 class="card-title">RudeKidz #7452 </h5>
+-                        <p class="card-text">Autor: Santiago</p>
+-                        <p class="card-text">0.78 &#x1F48E</p>
+-                        <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
+-                        <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
+-                    </div>
+-                </div>
+-            </div>
++      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
++        <div class="card">
++          <div class="cover cover-small"
++               style="background-image:url(https://lh3.googleusercontent.com/HLLghMW8zk3QyJWqWowpfJf2D7gK6rhq_E039gzuPALEFNd_CFuiUuPEJrNmeaSCsf6OTwkhRPhOgBHthlswI2OUr-ME6HdQj3Xv7A=w286) ;">
++          </div>
++          <div class="card-body">
++            <h5 class="card-title">RudeKidz #7452 </h5>
++            <p class="card-text">Autor: Santiago</p><p class="card-text">0.78 &#x1F48E</p>
++            <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
++            <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
++          </div>
++        </div>
++      </div>
+ 
+-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
+-                <div class="card">
+-                    <div class="cover cover-small"
+-                         style="background-image:url(https://lh3.googleusercontent.com/_wS9uIxieBvkPoEAmNsppTQwFDHhshs7BAFHuis-FkPwOqsW5-4MHcE0BhlpSG8Dkjy97uH9_rnsGOL-d3tOkZbBIFQHS2UVCzfaNg=w286) ;">
+-                    </div>
+-                    <div class="card-body">
+-                        <h5 class="card-title">RudeKidz #3085 </h5>
+-                        <p class="card-text">Autor: Luisa</p>
+-                        <p class="card-text">0.72 &#x1F48E</p>
+-                        <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
+-                        <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
+-                    </div>
+-                </div>
+-            </div>
++      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
++        <div class="card">
++          <div class="cover cover-small"
++               style="background-image:url(https://lh3.googleusercontent.com/_wS9uIxieBvkPoEAmNsppTQwFDHhshs7BAFHuis-FkPwOqsW5-4MHcE0BhlpSG8Dkjy97uH9_rnsGOL-d3tOkZbBIFQHS2UVCzfaNg=w286) ;">
++          </div>
++          <div class="card-body">
++            <h5 class="card-title">RudeKidz #3085 </h5>
++            <p class="card-text">Autor: Luisa</p><p class="card-text">0.72 &#x1F48E</p>
++            <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
++            <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
++          </div>
++        </div>
++      </div>
+ 
+-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
+-                <div class="card">
+-                    <div class="cover cover-small"
+-                         style="background-image:url(https://lh3.googleusercontent.com/JJIcaWJZj7ltpiDpterflDxzhRr2l-X-p--zlUbUM8kh23DS_XY4K7QVtPhu-Ntan1PW0iaDCMKxIIDH1lhbXZWyfLDaRf7L-jyfX_4=w286) ;">
+-                    </div>
+-                    <div class="card-body">
+-                        <h5 class="card-title">RudeKidz #8035 </h5>
+-                        <p class="card-text">Autor: Jose</p>
+-                        <p class="card-text">0.27 &#x1F48E</p>
+-                        <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
+-                        <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
+-                    </div>
+-                </div>
+-            </div>
++      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
++        <div class="card">
++          <div class="cover cover-small"
++               style="background-image:url(https://lh3.googleusercontent.com/JJIcaWJZj7ltpiDpterflDxzhRr2l-X-p--zlUbUM8kh23DS_XY4K7QVtPhu-Ntan1PW0iaDCMKxIIDH1lhbXZWyfLDaRf7L-jyfX_4=w286) ;">
++          </div>
++          <div class="card-body">
++            <h5 class="card-title">RudeKidz #8035 </h5>
++            <p class="card-text">Autor: Jose</p><p class="card-text">0.27 &#x1F48E</p>
++            <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
++            <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
++          </div>
++        </div>
++      </div>
+ 
+-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
+-                <div class="card">
+-                    <div class="cover cover-small"
+-                         style="background-image:url(https://lh3.googleusercontent.com/uesgLNkXBqdiQ33H1MS4c9rI7dZfhSNM4WZN0vMO2beNLTFTOWShpd4DZzZdwvpuZDafN6uxBuIBj1F5ubzeB-Wuoe5d-we0PaaCQg=w286) ;">
+-                    </div>
+-                    <div class="card-body">
+-                        <h5 class="card-title">RudeKidz #3985 </h5>
+-                        <p class="card-text">Autor: Tomas</p>
+-                        <p class="card-text">0.24 &#x1F48E</p>
+-                        <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
+-                        <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
+-                    </div>
+-                </div>
+-            </div>
++      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
++        <div class="card">
++          <div class="cover cover-small"
++               style="background-image:url(https://lh3.googleusercontent.com/uesgLNkXBqdiQ33H1MS4c9rI7dZfhSNM4WZN0vMO2beNLTFTOWShpd4DZzZdwvpuZDafN6uxBuIBj1F5ubzeB-Wuoe5d-we0PaaCQg=w286) ;">
++          </div>
++          <div class="card-body">
++            <h5 class="card-title">RudeKidz #3985 </h5>
++            <p class="card-text">Autor: Tomas</p><p class="card-text">0.24 &#x1F48E</p>
++            <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
++            <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
++          </div>
++        </div>
++      </div>
+ 
+-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
+-                <div class="card">
+-                    <div class="cover cover-small"
+-                         style="background-image:url(https://lh3.googleusercontent.com/-yuxbYKN1D0xyP8StLL14yLmR9mIe0_TeE_bw2ltS8au2Rao_DxxdGAwpxowr3onnZVbWsx8G2hFiNMXzkJflSpMLR2tiJ6wrXo4=w286) ;">
+-                    </div>
+-                    <div class="card-body">
+-                        <h5 class="card-title">RudeKidz #5685 </h5>
+-                        <p class="card-text">Autor: Harold</p>
+-                        <p class="card-text">0.56 &#x1F48E</p>
+-                        <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
+-                        <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
+-                    </div>
+-                </div>
+-            </div>
++      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
++        <div class="card">
++          <div class="cover cover-small"
++               style="background-image:url(https://lh3.googleusercontent.com/-yuxbYKN1D0xyP8StLL14yLmR9mIe0_TeE_bw2ltS8au2Rao_DxxdGAwpxowr3onnZVbWsx8G2hFiNMXzkJflSpMLR2tiJ6wrXo4=w286) ;">
++          </div>
++          <div class="card-body">
++            <h5 class="card-title">RudeKidz #5685 </h5>
++            <p class="card-text">Autor: Harold</p><p class="card-text">0.56 &#x1F48E</p>
++            <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
++            <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
++          </div>
++        </div>
++      </div>
+ 
+-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
+-                <div class="card">
+-                    <div class="cover cover-small"
+-                         style="background-image:url(https://lh3.googleusercontent.com/AxzkT8hv3nnF5KROxMmQT9Wy-bs7bVVdMb8hQDlBZYceTksFqEtSK9nsOeYOCTNVyUyTu0hqffhX0HJPY5_A17oilETuo4632Rhbmv8=w286) ;">
+-                    </div>
+-                    <a href="Colecciones.html"></a>
+-                    <div class="card-body">
+-                        <h5 class="card-title">RudeKidz #7085 </h5>
+-                        <p class="card-text">Autor: Nicolas</p>
+-                        <p class="card-text">0.98 &#x1F48E</p>
+-                        <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
+-                        <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
+-                    </div>
+-                </div>
+-            </div>
++      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
++        <div class="card">
++          <div class="cover cover-small"
++               style="background-image:url(https://lh3.googleusercontent.com/AxzkT8hv3nnF5KROxMmQT9Wy-bs7bVVdMb8hQDlBZYceTksFqEtSK9nsOeYOCTNVyUyTu0hqffhX0HJPY5_A17oilETuo4632Rhbmv8=w286) ;">
++          </div>
++          <a href="Colecciones.html"></a>
++          <div class="card-body">
++            <h5 class="card-title">RudeKidz #7085 </h5>
++            <p class="card-text">Autor: Nicolas</p><p class="card-text">0.98 &#x1F48E</p>
++            <a href="formulario1.html" class="btn btn-primary">Me gusta &#128420</a>
++            <a href="formulario1.html" class="btn btn-primary">Fcoin &#8383 </a>
++          </div>
++        </div>
++      </div>
+ 
+ 
+-        </div>
++
++
++    </div>
+ 
+-    </div>
++  </div>
+ </section>
+ </body>
+ 
+Index: target/Taller2Servlets-1.0-SNAPSHOT/crearPiezas.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <title>Crear Piezas de Arte Digital</title>\r\n\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"estiloPiezas.css\">\r\n</head>\r\n<body>\r\n<header>\r\n    <nav class=\"navbar navbar-expand-lg navbar-light\" style=\"background-color:#5463FF\">\r\n        <a class=\"navbar-brand\" href=\"index.html\">\r\n            <img src=\"assets/V_(logo_2010).svg.png\" alt=\"\" width=\"70\" height=\"60\">\r\n        </a>\r\n        <ul class=\"nav\">\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link\" href=\"Colecciones.html\">Colecciones</a>\r\n            </li>\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link\" href=\"#\">Acerca de</a>\r\n            </li>\r\n        </ul>\r\n    </nav>\r\n</header>\r\n<div class=\"crear-piezas\">\r\n    <form class=\"pieces-form\">\r\n\r\n        <h1 class=\"titulo\">Crear Piezas de Arte Digital</h1>\r\n\r\n        <input class=\"cajas\" type=\"title\" placeholder=\"Título\">\r\n        <input class=\"cajas\" type=\"price\" placeholder=\"Precio en FCoins\">\r\n\r\n        <p class=\"selec-archivo\">\r\n        <form name=\"subir-imagen\" type=\"POST\" enctype=\"multipart/form-data\"></p>\r\n            <input type=\"file\" name=\"imagen0000001\">\r\n            <p class=\"boton\"><input type=\"submit\" name=\"subir-imagen\" value=\"Enviar imagen \"/></p>\r\n        </form>\r\n\r\n    </form>\r\n</div>\r\n\r\n</body>\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/Taller2Servlets-1.0-SNAPSHOT/crearPiezas.html b/target/Taller2Servlets-1.0-SNAPSHOT/crearPiezas.html
+--- a/target/Taller2Servlets-1.0-SNAPSHOT/crearPiezas.html	
++++ b/target/Taller2Servlets-1.0-SNAPSHOT/crearPiezas.html	
+@@ -5,7 +5,7 @@
+     <title>Crear Piezas de Arte Digital</title>
+ 
+     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+-    <link rel="stylesheet" href="estiloPiezas.css">
++    <link rel="stylesheet" href=estiloPiezas.css>
+ </head>
+ <body>
+ <header>
+@@ -24,21 +24,38 @@
+     </nav>
+ </header>
+ <div class="crear-piezas">
+-    <form class="pieces-form">
++    <form action="./subir-nft" method="post" class="pieces-form">
++        <link rel="stylesheet" href=styles/estiloPiezas.css>
++        <header>
++            <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#5463FF">
++                <a class="navbar-brand" href="index.html">
++                    <img src="assets/V_(logo_2010).svg.png" alt="" width="70" height="60">
++                </a>
++            </nav>
++        </header>
++        <div class="crear-piezas">
++            <form class="pieces-form">
+ 
+-        <h1 class="titulo">Crear Piezas de Arte Digital</h1>
++                <h1 class="titulo">Crear Piezas de Arte Digital</h1>
+ 
+-        <input class="cajas" type="title" placeholder="Título">
+-        <input class="cajas" type="price" placeholder="Precio en FCoins">
++                <input class="cajas" name="titulo" type="title" placeholder="Título">
++                <input class="cajas" name="coins" type="price" placeholder="Precio en FCoins">
++
++                <p class="selec-archivo">
++                    <input type="file" id="url" required></input>
++                </p>
++                <p class="boton"><input type="submit" name="subir-imagen" value="Enviar imagen "/></p>
++            </form>
++    </form>
++</div>
++<input class="cajas" type="title" placeholder="Título">
++<input class="cajas" type="price" placeholder="Precio en FCoins">
+ 
+-        <p class="selec-archivo">
+-        <form name="subir-imagen" type="POST" enctype="multipart/form-data"></p>
+-            <input type="file" name="imagen0000001">
+-            <p class="boton"><input type="submit" name="subir-imagen" value="Enviar imagen "/></p>
+-        </form>
+-
+-    </form>
++<p class="selec-archivo"><form name="subir-imagen" type="POST" enctype="multipart/form-data"></p>
++    <input type="file" name="imagen0000001">
++    <p class="boton"><input type="submit" name="subir-imagen" value="Enviar imagen "/></p>
++</form>
++</form>
+ </div>
+-
+ </body>
+ </html>
+\ No newline at end of file
+Index: target/Taller2Servlets-1.0-SNAPSHOT/Colecciones.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"es\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Document</title>\r\n    <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\"\r\n          integrity=\"sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3\" crossorigin=\"anonymous\">\r\n    <link rel=\"stylesheet\" href=\"../styles/estiloC.css\">\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap\" rel=\"stylesheet\">\r\n</head>\r\n<body>\r\n<header>\r\n    <nav class=\"navbar navbar-expand-lg navbar-light\" style=\"background-color:#5463FF\">\r\n        <a class=\"navbar-brand\" href=\"index.html\">\r\n            <img src=\"../assets/avatar1.png\" alt=\"\" width=\"70\" height=\"60\">\r\n        </a>\r\n        <ul class=\"nav\">\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link active\" aria-current=\"page\" href=\"Ingresar.html\">Avatar#3652</a>\r\n            </li>\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link\" aria-current=\"page\" href=\"\">Saldo</a>\r\n            </li>\r\n        </ul>\r\n    </nav>\r\n</header>\r\n<!-- Toda esta seccion pertenece a los NFTs -->\r\n<section>\r\n    <div class=\"container mt-5 mb-5  \" id=\"colecciones\">\r\n\r\n        <div class=\"row justify-content-center\">\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/UJ4MZkbT3QLUh-CP0YoZfqp5KRBbyfRoCTum0SvhsFwKqzwgtq9kFO0tWnWZFyhtBdTt5pHxa11Yo6sxbzIKF8oThW25z9aHi6ILRA=w286);\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #1284</h5>\r\n                        <p class=\"card-text\">0.39 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/1fq9WTtMOhkozFJxQKzdqtVFti344e_uwgz51yJlXintKsgV3N8Uh9WTMyZVPuOd_DW8xxc_-2XVOvYGS8VpS4iK1eE0KOMtvNQpkrc=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #1289 </h5>\r\n                        <p class=\"card-text\">0.57 &#x1F48E </p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/YAVu1V1XvG2E4RYJo40BoQNHHIHNfX_-9MezbL9D7oFgLPNHOolhaZJ7pHs0IJ_zCnK-6Vf-9Um2h-mJUwdZXEqnKWTahHSRyeyKtQ=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #1659 </h5>\r\n                        <p class=\"card-text\">0.31 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/kiMK5F6sjf8Dgza5mDXIIIkuabjchdhPqtNrlcCQSb0OpiRTJS8vzcMWKN5-YuizBFdLWhjoq6aqZTkAT49UkFMTqvi7gTE_6bi4tFQ=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #5326 </h5>\r\n                        <p class=\"card-text\">0.87 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/84owxStuAzDSxkdZprmq7lvNxr6LBWhiqC50SPDvp1ftwQggEWeS5Bhp1CB3Hxbh0Z8L13TZgj0E0LQrTzRpVlNpZdfopvtP4DYLAxc=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #4264 </h5>\r\n                        <p class=\"card-text\">0.16 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/9wzG7dLuHpwjeF61tJ0KhO_Ka0Cd7WD_OeMRxKgfELjaO0pQ4XCMF2_iZJebXuewfPOgz_GcMl0ZAFH7BIiNXlBCAOLQ2Q7N-gkc=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #8954 </h5>\r\n                        <p class=\"card-text\">0.36 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/HLLghMW8zk3QyJWqWowpfJf2D7gK6rhq_E039gzuPALEFNd_CFuiUuPEJrNmeaSCsf6OTwkhRPhOgBHthlswI2OUr-ME6HdQj3Xv7A=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #7452 </h5>\r\n                        <p class=\"card-text\">0.78 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/_wS9uIxieBvkPoEAmNsppTQwFDHhshs7BAFHuis-FkPwOqsW5-4MHcE0BhlpSG8Dkjy97uH9_rnsGOL-d3tOkZbBIFQHS2UVCzfaNg=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #3085 </h5>\r\n                        <p class=\"card-text\">0.72 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/JJIcaWJZj7ltpiDpterflDxzhRr2l-X-p--zlUbUM8kh23DS_XY4K7QVtPhu-Ntan1PW0iaDCMKxIIDH1lhbXZWyfLDaRf7L-jyfX_4=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #8035 </h5>\r\n                        <p class=\"card-text\">0.27 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/uesgLNkXBqdiQ33H1MS4c9rI7dZfhSNM4WZN0vMO2beNLTFTOWShpd4DZzZdwvpuZDafN6uxBuIBj1F5ubzeB-Wuoe5d-we0PaaCQg=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #3985 </h5>\r\n                        <p class=\"card-text\">0.24 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/-yuxbYKN1D0xyP8StLL14yLmR9mIe0_TeE_bw2ltS8au2Rao_DxxdGAwpxowr3onnZVbWsx8G2hFiNMXzkJflSpMLR2tiJ6wrXo4=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #5685 </h5>\r\n                        <p class=\"card-text\">0.56 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"col-12 col-sm-6 col-md-4 col-lg-3 mt-2\">\r\n                <div class=\"card\">\r\n                    <div class=\"cover cover-small\"\r\n                         style=\"background-image:url(https://lh3.googleusercontent.com/AxzkT8hv3nnF5KROxMmQT9Wy-bs7bVVdMb8hQDlBZYceTksFqEtSK9nsOeYOCTNVyUyTu0hqffhX0HJPY5_A17oilETuo4632Rhbmv8=w286) ;\"></div>\r\n                    <div class=\"card-body\">\r\n                        <h5 class=\"card-title\">RudeKidz #7085 </h5>\r\n                        <p class=\"card-text\">0.98 &#x1F48E</p>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Me gusta &#128420</a>\r\n                        <a href=\"Ingresar.html\" class=\"btn btn-primary\">Fcoin &#8383 </a>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n        </div>\r\n\r\n    </div>\r\n</section>\r\n</body>\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/Taller2Servlets-1.0-SNAPSHOT/Colecciones.html b/target/Taller2Servlets-1.0-SNAPSHOT/Colecciones.html
+--- a/target/Taller2Servlets-1.0-SNAPSHOT/Colecciones.html	
++++ b/target/Taller2Servlets-1.0-SNAPSHOT/Colecciones.html	
+@@ -7,7 +7,7 @@
+     <title>Document</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+-    <link rel="stylesheet" href="../styles/estiloC.css">
++    <link rel="stylesheet" href=./styles/estiloC.css>
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+@@ -16,11 +16,11 @@
+ <header>
+     <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#5463FF">
+         <a class="navbar-brand" href="index.html">
+-            <img src="../assets/avatar1.png" alt="" width="70" height="60">
++            <img src=./assets/avatar1.png alt="" width="70" height="60">
+         </a>
+         <ul class="nav">
+             <li class="nav-item">
+-                <a class="nav-link active" aria-current="page" href="Ingresar.html">Avatar#3652</a>
++                <a class="nav-link active" aria-current="page" href="colecciones_U.html">Avatar#3652</a>
+             </li>
+             <li class="nav-item">
+                 <a class="nav-link" aria-current="page" href="">Saldo</a>
+Index: src/main/java/co/edu/unbosque/tiendadeartevale/FCoinsServlet.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/co/edu/unbosque/tiendadeartevale/FCoinsServlet.java b/src/main/java/co/edu/unbosque/tiendadeartevale/FCoinsServlet.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/co/edu/unbosque/tiendadeartevale/FCoinsServlet.java	
+@@ -0,0 +1,58 @@
++package co.edu.unbosque.tiendadeartevale;
++
++import co.edu.unbosque.tiendadeartevale.DTOS.User;
++import co.edu.unbosque.tiendadeartevale.UserService.UserService;
++import com.sun.tools.javac.code.Directive;
++
++import javax.servlet.RequestDispatcher;
++import javax.servlet.ServletException;
++import javax.servlet.annotation.WebServlet;
++import javax.servlet.http.HttpServlet;
++import javax.servlet.http.HttpServletRequest;
++import javax.servlet.http.HttpServletResponse;
++import java.io.File;
++import java.io.IOException;
++import java.util.List;
++
++@WebServlet(name = "recargarFCoins", value = "/recargarFCoins")
++public class FCoinsServlet extends HttpServlet {
++
++    public void init(){}
++
++    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
++        String username = request.getParameter("username");
++        String money = request.getParameter("money");
++
++        List<User> users = new UserService().getUsers();
++        User usuario = null;
++
++        for (User user : users){
++            if (user.getUsername().equalsIgnoreCase(username)){
++                usuario = user;
++                users.remove(usuario);
++                break;
++            }
++        }
++
++        String currentMoney = usuario.getMoney();
++        String newMoney = String.valueOf(Integer.parseInt(currentMoney) + Integer.parseInt(money));
++        usuario.setMoney(newMoney);
++        new UserService().createUser(usuario.getUsername(), usuario.getPassword(), usuario.getRole(), usuario.getMoney(), getServletContext().getRealPath("") + File.separator);
++
++        request.setAttribute("role", usuario.getRole());
++        request.setAttribute("password", usuario.getPassword());
++        request.setAttribute("money", usuario.getMoney());
++        request.setAttribute("username", usuario.getUsername());
++
++        if (usuario.getRole().equals("artista")) {
++            RequestDispatcher dispatcher = request.getRequestDispatcher("./colecciones_U.html");
++            dispatcher.forward(request, response);
++        } else if (usuario.getRole().equals("comprador")) {
++            RequestDispatcher dispatcher = request.getRequestDispatcher("./verPiezas.html");
++            dispatcher.forward(request, response);
++        }
++
++    }
++
++    public void destroy() {}
++}
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\r\n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n    <modelVersion>4.0.0</modelVersion>\r\n\r\n    <groupId>co.edu.unbosque</groupId>\r\n    <artifactId>Taller2Servlets</artifactId>\r\n    <version>1.0-SNAPSHOT</version>\r\n    <name>Taller2Servlets</name>\r\n    <packaging>war</packaging>\r\n\r\n    <properties>\r\n        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\r\n        <maven.compiler.target>1.8</maven.compiler.target>\r\n        <maven.compiler.source>1.8</maven.compiler.source>\r\n        <junit.version>5.8.1</junit.version>\r\n    </properties>\r\n\r\n    <dependencies>\r\n        <dependency>\r\n            <groupId>javax.servlet</groupId>\r\n            <artifactId>javax.servlet-api</artifactId>\r\n            <version>4.0.1</version>\r\n            <scope>provided</scope>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.junit.jupiter</groupId>\r\n            <artifactId>junit-jupiter-api</artifactId>\r\n            <version>${junit.version}</version>\r\n            <scope>test</scope>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>com.opencsv</groupId>\r\n            <artifactId>opencsv</artifactId>\r\n            <version>4.6</version>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.junit.jupiter</groupId>\r\n            <artifactId>junit-jupiter-engine</artifactId>\r\n            <version>${junit.version}</version>\r\n            <scope>test</scope>\r\n        </dependency>\r\n    </dependencies>\r\n\r\n    <build>\r\n        <plugins>\r\n            <plugin>\r\n                <groupId>org.apache.maven.plugins</groupId>\r\n                <artifactId>maven-war-plugin</artifactId>\r\n                <version>3.3.2</version>\r\n            </plugin>\r\n        </plugins>\r\n    </build>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pom.xml b/pom.xml
+--- a/pom.xml	
++++ b/pom.xml	
+@@ -49,7 +49,7 @@
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-war-plugin</artifactId>
+                 <version>3.3.2</version>
+-            </plugin>
++            </plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><configuration><source>8</source><target>8</target></configuration></plugin>
+         </plugins>
+     </build>
+ </project>
+\ No newline at end of file
+Index: src/main/java/co/edu/unbosque/tiendadeartevale/DTOS/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package co.edu.unbosque.tiendadeartevale.DTOS;\r\n\r\nimport com.opencsv.bean.CsvBindByName;\r\n\r\npublic class User {\r\n\r\n    @CsvBindByName\r\n    private String username;\r\n\r\n    @CsvBindByName\r\n    private String password;\r\n\r\n    @CsvBindByName\r\n    private String role;\r\n\r\n    public User() {\r\n    }\r\n\r\n    public User(String username, String password, String role) {\r\n        this.username = username;\r\n        this.password = password;\r\n        this.role = role;\r\n    }\r\n\r\n    public String getUsername() {\r\n        return username;\r\n    }\r\n\r\n    public void setUsername(String username) {\r\n        this.username = username;\r\n    }\r\n\r\n    public String getPassword() {\r\n        return password;\r\n    }\r\n\r\n    public void setPassword(String password) {\r\n        this.password = password;\r\n    }\r\n\r\n    public String getRole() {\r\n        return role;\r\n    }\r\n\r\n    public void setRole(String role) {\r\n        this.role = role;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"User{\" +\r\n                \"username='\" + username + '\\'' +\r\n                \", password='\" + password + '\\'' +\r\n                \", role='\" + role + '\\'' +\r\n                '}';\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/co/edu/unbosque/tiendadeartevale/DTOS/User.java b/src/main/java/co/edu/unbosque/tiendadeartevale/DTOS/User.java
+--- a/src/main/java/co/edu/unbosque/tiendadeartevale/DTOS/User.java	
++++ b/src/main/java/co/edu/unbosque/tiendadeartevale/DTOS/User.java	
+@@ -13,13 +13,16 @@
+     @CsvBindByName
+     private String role;
+ 
++    private String money;
++
+     public User() {
+     }
+ 
+-    public User(String username, String password, String role) {
++    public User(String username, String password, String role, String money) {
+         this.username = username;
+         this.password = password;
+         this.role = role;
++        this.money = money;
+     }
+ 
+     public String getUsername() {
+@@ -46,6 +49,14 @@
+         this.role = role;
+     }
+ 
++    public String getMoney() {
++        return money;
++    }
++
++    public void setMoney(String money) {
++        this.money = money;
++    }
++
+     @Override
+     public String toString() {
+         return "User{" +
+Index: src/main/webapp/registro.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"es\">\r\n<!-- Este es el encabezado el que contiene el menu -->\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <title>Registro</title>\r\n    <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\"\r\n          integrity=\"sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3\" crossorigin=\"anonymous\">\r\n\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=styles/estiloR.css>\r\n</head>\r\n\r\n<body>\r\n<!-- Este es el encabezado el que contiene el menu -->\r\n<header>\r\n    <nav class=\"navbar navbar-expand-lg navbar-light\" style=\"background-color:#5463FF\">\r\n        <a class=\"navbar-brand\" href=\"index.html\">\r\n            <img src=\"assets/V_(logo_2010).svg.png\" alt=\"\" width=\"70\" height=\"60\">\r\n        </a>\r\n        <ul class=\"nav\">\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link active\" aria-current=\"page\" href=\"Ingresar.html\">Iniciar sesion</a>\r\n            </li>\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link\" href=\"registro.html\">Registrese</a>\r\n            </li>\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link\" href=\"Colecciones.html\">colecciones</a>\r\n            </li>\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link\" href=\"#\">Acerca de</a>\r\n            </li>\r\n        </ul>\r\n    </nav>\r\n</header>\r\n<!-- Este es el formulario que tiene que hacer el ususario para registrarse -->\r\n\r\n\r\n<h1 class=\"titulo\">Registrarse</h1>\r\n<form class=\"form\" action=\"./signup\" method=\"post\">\r\n    <input class=\"cajas\" type=\"text\" placeholder=\"Name\" required maxlength=\"30\">\r\n    <input name=\"username\" class=\"cajas\" type=\"text\" placeholder=\"UserName\" required maxlength=\"30\">\r\n    <input class=\"cajas\" type=\"email\" placeholder=\"Email\" required maxlength=\"30\">\r\n    <input name=\"password\" class=\"cajas\" type=\"password\" placeholder=\"Password\" required maxlength=\"30\">\r\n\r\n    <select name=\"Rol\" id=\"rol\">\r\n        <option value=\"comprador\">Comprador</option>\r\n        <option value=\"artista\">Artista</option>\r\n    </select>\r\n    <p input name = \"comprador\" class=\"termino1\"><input type=\"checkbox\"> Cuenta Usuario </p>\r\n    <p input name = \"artista\" class=\"termino1\"><input type=\"checkbox\"> Cuenta Artista </p>\r\n\r\n    <input type=\"submit\" class=\"btn\" value=\"REGISTRAR\">\r\n\r\n\r\n    <p class=\"tengo-cuenta\"><a href=\"Ingresar.html\" class=\"tengo-cuenta\">Ya tengo cuenta</a></p>\r\n\r\n</form>\r\n\r\n\r\n</body>\r\n\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/webapp/registro.html b/src/main/webapp/registro.html
+--- a/src/main/webapp/registro.html	
++++ b/src/main/webapp/registro.html	
+@@ -26,7 +26,7 @@
+                 <a class="nav-link" href="registro.html">Registrese</a>
+             </li>
+             <li class="nav-item">
+-                <a class="nav-link" href="Colecciones.html">colecciones</a>
++                <a class="nav-link" href="Colecciones.html">Colecciones</a>
+             </li>
+             <li class="nav-item">
+                 <a class="nav-link" href="#">Acerca de</a>
+@@ -48,8 +48,6 @@
+         <option value="comprador">Comprador</option>
+         <option value="artista">Artista</option>
+     </select>
+-    <p input name = "comprador" class="termino1"><input type="checkbox"> Cuenta Usuario </p>
+-    <p input name = "artista" class="termino1"><input type="checkbox"> Cuenta Artista </p>
+ 
+     <input type="submit" class="btn" value="REGISTRAR">
+ 
+Index: src/main/webapp/crearPiezas.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <title>Crear Piezas de Arte Digital</title>\r\n\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap\" rel=\"stylesheet\">\r\n<<<<<<< HEAD\r\n    <link rel=\"stylesheet\" href=estiloPiezas.css>\r\n</head>\r\n<body>\r\n<header>\r\n    <nav class=\"navbar navbar-expand-lg navbar-light\" style=\"background-color:#5463FF\">\r\n        <a class=\"navbar-brand\" href=\"index.html\">\r\n            <img src=\"assets/V_(logo_2010).svg.png\" alt=\"\" width=\"70\" height=\"60\">\r\n        </a>\r\n        <ul class=\"nav\">\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link\" href=\"Colecciones.html\">Colecciones</a>\r\n            </li>\r\n            <li class=\"nav-item\">\r\n                <a class=\"nav-link\" href=\"#\">Acerca de</a>\r\n            </li>\r\n        </ul>\r\n    </nav>\r\n</header>\r\n<div class=\"crear-piezas\">\r\n    <form action=\"./subir-nft\" method=\"post\" class=\"pieces-form\">\r\n=======\r\n    <link rel=\"stylesheet\" href=styles/estiloPiezas.css>\r\n</head>\r\n<body>\r\n    <header>\r\n        <nav class=\"navbar navbar-expand-lg navbar-light\" style=\"background-color:#5463FF\">\r\n            <a class=\"navbar-brand\" href=\"index.html\">\r\n                <img src=\"assets/V_(logo_2010).svg.png\" alt=\"\" width=\"70\" height=\"60\">\r\n            </a>\r\n        </nav>\r\n    </header>\r\n    <div class=\"crear-piezas\">\r\n        <form class=\"pieces-form\">\r\n>>>>>>> 05bd714f2c257a2be73347f114b1f3703d3d602a\r\n\r\n            <h1 class=\"titulo\">Crear Piezas de Arte Digital</h1>\r\n\r\n<<<<<<< HEAD\r\n        <input class=\"cajas\" name=\"titulo\" type=\"title\" placeholder=\"Título\">\r\n        <input class=\"cajas\" name=\"coins\" type=\"price\" placeholder=\"Precio en FCoins\">\r\n\r\n        <p class=\"selec-archivo\">\r\n            <input type=\"file\" id=\"url\" required></input>\r\n        </p>\r\n        <p class=\"boton\"><input type=\"submit\" name=\"subir-imagen\" value=\"Enviar imagen \"/></p>\r\n    </form>\r\n\r\n    </form>\r\n</div>\r\n=======\r\n            <input class=\"cajas\" type=\"title\" placeholder=\"Título\">\r\n            <input class=\"cajas\" type=\"price\" placeholder=\"Precio en FCoins\">\r\n>>>>>>> 05bd714f2c257a2be73347f114b1f3703d3d602a\r\n\r\n            <p class=\"selec-archivo\"><form name=\"subir-imagen\" type=\"POST\" enctype=\"multipart/form-data\"></p>\r\n            <input type=\"file\" name=\"imagen0000001\">\r\n            <p class=\"boton\"><input type=\"submit\" name=\"subir-imagen\" value=\"Enviar imagen \"/></p>\r\n            </form>\r\n        </form>\r\n    </div>\r\n</body>\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/webapp/crearPiezas.html b/src/main/webapp/crearPiezas.html
+--- a/src/main/webapp/crearPiezas.html	
++++ b/src/main/webapp/crearPiezas.html	
+@@ -5,7 +5,6 @@
+     <title>Crear Piezas de Arte Digital</title>
+ 
+     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+-<<<<<<< HEAD
+     <link rel="stylesheet" href=estiloPiezas.css>
+ </head>
+ <body>
+@@ -26,45 +25,37 @@
+ </header>
+ <div class="crear-piezas">
+     <form action="./subir-nft" method="post" class="pieces-form">
+-=======
+-    <link rel="stylesheet" href=styles/estiloPiezas.css>
+-</head>
+-<body>
+-    <header>
+-        <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#5463FF">
+-            <a class="navbar-brand" href="index.html">
+-                <img src="assets/V_(logo_2010).svg.png" alt="" width="70" height="60">
+-            </a>
+-        </nav>
+-    </header>
+-    <div class="crear-piezas">
+-        <form class="pieces-form">
+->>>>>>> 05bd714f2c257a2be73347f114b1f3703d3d602a
++        <link rel="stylesheet" href=styles/estiloPiezas.css>
++        <header>
++            <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#5463FF">
++                <a class="navbar-brand" href="index.html">
++                    <img src="assets/V_(logo_2010).svg.png" alt="" width="70" height="60">
++                </a>
++            </nav>
++        </header>
++        <div class="crear-piezas">
++            <form class="pieces-form">
+ 
+-            <h1 class="titulo">Crear Piezas de Arte Digital</h1>
++                <h1 class="titulo">Crear Piezas de Arte Digital</h1>
+ 
+-<<<<<<< HEAD
+-        <input class="cajas" name="titulo" type="title" placeholder="Título">
+-        <input class="cajas" name="coins" type="price" placeholder="Precio en FCoins">
++                <input class="cajas" name="titulo" type="title" placeholder="Título">
++                <input class="cajas" name="coins" type="price" placeholder="Precio en FCoins">
+ 
+-        <p class="selec-archivo">
+-            <input type="file" id="url" required></input>
+-        </p>
+-        <p class="boton"><input type="submit" name="subir-imagen" value="Enviar imagen "/></p>
+-    </form>
+-
++                <p class="selec-archivo">
++                    <input type="file" id="url" required></input>
++                </p>
++                <p class="boton"><input type="submit" name="subir-imagen" value="Enviar imagen "/></p>
++            </form>
+     </form>
+ </div>
+-=======
+-            <input class="cajas" type="title" placeholder="Título">
+-            <input class="cajas" type="price" placeholder="Precio en FCoins">
+->>>>>>> 05bd714f2c257a2be73347f114b1f3703d3d602a
++<input class="cajas" type="title" placeholder="Título">
++<input class="cajas" type="price" placeholder="Precio en FCoins">
+ 
+-            <p class="selec-archivo"><form name="subir-imagen" type="POST" enctype="multipart/form-data"></p>
+-            <input type="file" name="imagen0000001">
+-            <p class="boton"><input type="submit" name="subir-imagen" value="Enviar imagen "/></p>
+-            </form>
+-        </form>
+-    </div>
++<p class="selec-archivo"><form name="subir-imagen" type="POST" enctype="multipart/form-data"></p>
++    <input type="file" name="imagen0000001">
++    <p class="boton"><input type="submit" name="subir-imagen" value="Enviar imagen "/></p>
++</form>
++</form>
++</div>
+ </body>
+ </html>
+\ No newline at end of file
+Index: target/classes/users.csv
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>username,password,role
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/classes/users.csv b/target/classes/users.csv
+--- a/target/classes/users.csv	
++++ b/target/classes/users.csv	
+@@ -1,1 +1,1 @@
+-username,password,role
+\ No newline at end of file
++username,password,role,money
+\ No newline at end of file
